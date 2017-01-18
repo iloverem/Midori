@@ -14,11 +14,19 @@ namespace MidoriBot.Common
         }
     }
 
+    public class MEmbedFooter : EmbedFooterBuilder
+    {
+        public MEmbedFooter(IDiscordClient Client)
+        {
+            WithIconUrl(Client.CurrentUser.AvatarUrl);
+        }
+    }
+
     public class EmbedBase : EmbedBuilder
     {
         public EmbedBase()
         {
-
+            
         }
     }
 

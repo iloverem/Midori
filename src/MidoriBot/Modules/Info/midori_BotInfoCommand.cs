@@ -16,11 +16,11 @@ namespace MidoriBot.Modules.Info
         public async Task Midori_BotInfoCommand()
         {
             NormalEmbed Info = new NormalEmbed();
-            Info.Title = "Midori Information";
+            Info.Title = "Bot Information";
             Info.Description = MidoriConfig.BotDescription;
             Info.AddField(MD =>
             {
-                MD.Name = "Midori Version";
+                MD.Name = "Bot Version";
                 MD.Value = MidoriConfig.MidoriVersion;
             });
             Info.AddField(MD =>
@@ -28,15 +28,7 @@ namespace MidoriBot.Modules.Info
                 MD.Name = "Owner";
                 MD.Value = Context.Client.GetUserAsync(Context.Client.GetApplicationInfoAsync().Result.Owner.Id).Result.Username;
             });
-            Info.AddField(MD =>
-            {
-                MD.Name = "Creation Date";
-                DateTimeOffset CreatedAt = Context.Client.CurrentUser.CreatedAt;
-                Dates DateConfig = new Dates();
-                DateConfig.Setup();
-                MD.Value = DateConfig.GetDate(CreatedAt);
-            });
-            Info.Footer = (new EmbedFooterBuilder()).WithText("Midori Bot Information");
+            Info.Footer = (new MEmbedFooter(Context.Client)).WithText("Bot Information");
             await Context.Channel.SendEmbedAsync(Info);
         }
     }

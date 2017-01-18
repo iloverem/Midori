@@ -89,7 +89,7 @@ namespace MidoriBot
             });
 
             // Send error message
-            await Context.Channel.SendMessageAsync("", false, CommandError);
+            await Context.Channel.SendEmbedAsync(CommandError);
         }
     }
 }

@@ -31,13 +31,6 @@ namespace MidoriBot.Modules.Info
                 x.Value = Guild.VerificationLevel.ToString();
                 x.IsInline = true;
             });
-            /*Embed.AddField(x =>
-            {
-                x.Name = "Date Created";
-                Dates DateGen = new Dates();
-                DateGen.Setup();
-                x.Value = DateGen.GetDate(Guild.CreatedAt);
-            });*/
             Embed.AddField(x =>
             {
                 x.Value = Guild.GetVoiceChannelsAsync().Result.Count().ToString();
