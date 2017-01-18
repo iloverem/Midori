@@ -24,5 +24,10 @@ namespace MidoriBot.Common
         }
         public static async Task<IUserMessage> SendEmbedAsync(this IMessageChannel Channel, EmbedBuilder Embed) =>
             await Channel.SendMessageAsync("", false, Embed);
+        public static bool GetBooleanFromString(string Boolean)
+        {
+            if (Boolean == "true") return true;
+            else return false;
+        }
     }
 }

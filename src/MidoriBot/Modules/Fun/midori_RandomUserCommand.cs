@@ -20,7 +20,7 @@ namespace MidoriBot.Modules.Fun
             Random Generator = new Random();
             SocketGuildUser FoundUser = TargetGuild.Users.ElementAt(Generator.Next(1, TargetGuild.Users.Count));
             NormalEmbed RandomUser = new NormalEmbed();
-            RandomUser.Title = "The wide Midori has picked...";
+            RandomUser.Title = "The wise Midori has picked...";
             RandomUser.Description = FoundUser.Username;
             await Context.Channel.SendEmbedAsync(RandomUser);
         }
