@@ -4,6 +4,7 @@ using Discord;
 using Discord.WebSocket;
 using Discord.Commands;
 using System.Threading.Tasks;
+using MidoriBot.Events;
 
 namespace MidoriBot
 {
@@ -41,7 +42,8 @@ namespace MidoriBot
             MidoriDeps.Add(MidoriCommands);
 
             // Events handler
-            // TO-DO: Make an events handler
+            MidoriEvents MidoriEvents = new MidoriEvents(MidoriDeps);
+            MidoriEvents.Install();
 
             // Login and connect
             await MidoriClient.LoginAsync(TokenType.Bot, MidoriConfig.ConnectionToken);

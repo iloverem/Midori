@@ -12,7 +12,7 @@ namespace MidoriBot.Modules.Info
     [Name("Info")]
     public class midori_BotInfoCommand : ModuleBase
     {
-        [Command("botinfo"), Alias("BInfo"), Summary("Information about me!"), MinPermissions(AccessLevel.User)]
+        [Command("BotInfo"), Alias("BInfo"), Summary("Information about me!"), MinPermissions(AccessLevel.User)]
         public async Task Midori_BotInfoCommand()
         {
             NormalEmbed Info = new NormalEmbed();
