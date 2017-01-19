@@ -77,12 +77,24 @@ namespace MidoriBot.Modules
                         a.IsInline = true;
                         a.Value = $"{MidoriConfig.CommandPrefix}{(Command.Module.IsSubmodule ? $"{Command.Module.Name} " : "")}{Command.Name} " + string.Join(" ", Command.Parameters.Select(p => formatParam(p))).Replace("`", "");
                     });
+                    x.AddField(a =>
+                    {
+                        a.Name = "Aliases";
+                        a.IsInline = true;
+                        StringBuilder s = new StringBuilder();
+                        foreach (string Alias in Command.Aliases)
+                        {
+                            if (!(Alias == Command.Aliases[0]))
+                                s.Append(Alias + " ");
+                        }
+                        a.Value = $"{(Command.Aliases.Any() ? s.ToString() : "No aliases.")}";
+                    });
                     await Context.Channel.SendEmbedAsync(x);
                 }
             }
             else
             {
-                await ReplyAsync($"I couldn't find any command matching \"{cmdname}\". :(");
+                await ReplyAsync($":warning: I couldn't find any command matching \"`{cmdname}`\". :(");
                 return;
             }
         }
