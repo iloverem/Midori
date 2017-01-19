@@ -9,6 +9,7 @@ using Discord;
 
 namespace MidoriBot.Modules.Info
 {
+    [Name("Info=")]
     public class midori_AvatarCommand : ModuleBase
     {
         [Command("Avatar"), Summary("Gets the avatar for a user.")]
