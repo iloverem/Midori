@@ -31,7 +31,7 @@ namespace MidoriBot.Common.Preconditions
 
         public AccessLevel GetPermission(ICommandContext Context)
         {
-            if (Context.User.IsBot && !MidoriConfig.AcceptBotCommands)
+            if (Context.User.IsBot && !(bool)Midori.MidoriConfig["AcceptBotCommands"])
                 return AccessLevel.Blocked; // No bots
 
             IApplication CurrentApp = Context.Client.GetApplicationInfoAsync().Result;

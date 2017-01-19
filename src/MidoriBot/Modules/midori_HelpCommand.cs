@@ -45,7 +45,7 @@ namespace MidoriBot.Modules
                     HEDesc.AppendLine($"• `{Command.Name}`: {Command.Summary}");
                 }
             }
-            HEDesc.AppendLine($"\nYou can use `{MidoriConfig.CommandPrefix}Help <command>` for more information on that command.");
+            HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <command>` for more information on that command.");
 
             HelpEmbed.Description = HEDesc.ToString();
             await (Context.User.CreateDMChannelAsync().Result).SendEmbedAsync(HelpEmbed);
@@ -75,7 +75,7 @@ namespace MidoriBot.Modules
                     {
                         a.Name = "Usage";
                         a.IsInline = true;
-                        a.Value = $"{MidoriConfig.CommandPrefix}{(Command.Module.IsSubmodule ? $"{Command.Module.Name} " : "")}{Command.Name} " + string.Join(" ", Command.Parameters.Select(p => formatParam(p))).Replace("`", "");
+                        a.Value = $"{Midori.MidoriConfig["Command_Prefix"]}{(Command.Module.IsSubmodule ? $"{Command.Module.Name} " : "")}{Command.Name} " + string.Join(" ", Command.Parameters.Select(p => formatParam(p))).Replace("`", "");
                     });
                     x.AddField(a =>
                     {

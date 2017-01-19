@@ -17,12 +17,12 @@ namespace MidoriBot.Modules.Info
         {
             NormalEmbed Info = new NormalEmbed();
             Info.Title = "Bot Information";
-            Info.Description = MidoriConfig.GetDescription();
+            Info.Description = Midori.GetDescription();
             Info.ThumbnailUrl = Context.Client.CurrentUser.AvatarUrl;
             Info.AddField(MD =>
             {
                 MD.Name = "Bot Version";
-                MD.Value = MidoriConfig.MidoriVersion;
+                MD.Value = Midori.Version;
                 MD.IsInline = true;
             });
             Info.AddField(MD =>

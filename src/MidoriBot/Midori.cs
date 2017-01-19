@@ -6,12 +6,16 @@ using Discord.Commands;
 using System.Threading.Tasks;
 using MidoriBot.Events;
 using System.Net.Http;
+using Newtonsoft.Json;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace MidoriBot
 {
     public class Midori
     {
         public static DiscordSocketClient MidoriClient;
+        public static string Version = "1.0";
         public DiscordSocketConfig MidoriSocketConfig = new DiscordSocketConfig
         {
             DownloadUsersOnGuildAvailable = true,
@@ -19,11 +23,17 @@ namespace MidoriBot
             MessageCacheSize = 10
         };
         public CommandService MidoriCommands;
+        public static Dictionary<string, object> MidoriConfig;
         public CommandServiceConfig MidoriCommandsConfig = new CommandServiceConfig
         {
             DefaultRunMode = RunMode.Sync
         };
         public MidoriHandler CommandHandler;
+
+        public static string GetDescription()
+        {
+            return (Midori.MidoriClient.GetApplicationInfoAsync().GetAwaiter().GetResult()).Description;
+        }
 
         public static void Main(string[] args)
         {
@@ -52,10 +62,17 @@ namespace MidoriBot
             Console.WriteLine("Handover success.");
             Console.WriteLine("Created client, command service and command handler.");
 
+            // Import JSON
+            StreamReader Raw = File.OpenText(@"./midori_config.json");
+            JsonTextReader TextReader = new JsonTextReader(Raw);
+            JObject MidoriJConfig = (JObject)JToken.ReadFrom(TextReader);
+            MidoriConfig = JsonConvert.DeserializeObject<Dictionary<string, object>>(MidoriJConfig.ToString());
+
             // Setup dependencies
             IDependencyMap MidoriDeps = new DependencyMap();
             MidoriDeps.Add(MidoriClient);
             MidoriDeps.Add(MidoriCommands);
+            MidoriDeps.Add(MidoriJConfig);
             Console.WriteLine("Organized dependency library.");
 
             // Events handler
@@ -64,7 +81,7 @@ namespace MidoriBot
             Console.WriteLine("Installed event handler.");
 
             // Login and connect
-            await MidoriClient.LoginAsync(TokenType.Bot, MidoriConfig.ConnectionToken);
+            await MidoriClient.LoginAsync(TokenType.Bot, MidoriConfig["Connection_Token"].ToString());
             Console.WriteLine("Sent login information to Discord.");
             await MidoriClient.ConnectAsync();
             Console.WriteLine("Connected.");

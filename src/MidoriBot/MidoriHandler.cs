@@ -29,13 +29,13 @@ namespace MidoriBot
         public async Task MidoriProcessCommand(SocketMessage Raw)
         {
             SocketUserMessage Message = Raw as SocketUserMessage;
-            String Prefix = MidoriConfig.CommandPrefix;
+            String Prefix = Midori.MidoriConfig["Command_Prefix"].ToString();
 
             // Series of checks to make sure we've got a command
             if (Message == null) return;
             if (Message.Content == Prefix) return;
             if (Message.Content.Contains(Prefix + Prefix)) return;
-            if (Message.Author.IsBot && !MidoriConfig.AcceptBotCommands) return;
+            if (Message.Author.IsBot && ((bool)Midori.MidoriConfig["AcceptBotCommands"])) return;
             if (Message.Author == null) return;
 
             // Arguments
@@ -72,7 +72,7 @@ namespace MidoriBot
             CommandError.ThumbnailUrl = Context.Client.CurrentUser.AvatarUrl;
 
             // Unknown command
-            if (Search.Error == Discord.Commands.CommandError.UnknownCommand && !MidoriConfig.AlertOnUnknownCommand && !Context.IsPrivate) return;
+            if (Search.Error == Discord.Commands.CommandError.UnknownCommand && !(bool)Midori.MidoriConfig["AlertOnUnknownCommands"] && !Context.IsPrivate) return;
 
             // Fields
             CommandError.AddField(Field =>

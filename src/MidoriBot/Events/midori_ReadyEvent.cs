@@ -10,11 +10,11 @@ namespace MidoriBot.Events
         public static async Task ReadyEvent()
         {
             Console.WriteLine("=====");
-            Console.WriteLine(MidoriConfig.GetDescription());
-            Console.WriteLine("Active token: " + MidoriConfig.ConnectionToken);
-            Console.WriteLine("Active command prefix: " + MidoriConfig.CommandPrefix);
-            Console.WriteLine("Accepting bot commands: " + (MidoriConfig.AcceptBotCommands ? "Yes." : "No."));
-            Console.WriteLine("Alerting on unknown command: " + (MidoriConfig.AlertOnUnknownCommand ? "Yes." : "No."));
+            Console.WriteLine((Midori.MidoriClient.GetApplicationInfoAsync().GetAwaiter().GetResult()).Description);
+            Console.WriteLine("Active token: " + Midori.MidoriConfig["Connection_Token"]);
+            Console.WriteLine("Active command prefix: " + Midori.MidoriConfig["Command_Prefix"]);
+            Console.WriteLine("Accepting bot commands: " + ((bool)Midori.MidoriConfig["AcceptBotCommands"] ? "Yes." : "No."));
+            Console.WriteLine("Alerting on unknown command: " + ((bool)Midori.MidoriConfig["AlertOnUnknownCommands"] ? "Yes." : "No."));
             Console.WriteLine("=====");
             await Task.Yield();
         }
