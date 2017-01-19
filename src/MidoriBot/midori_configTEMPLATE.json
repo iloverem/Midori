@@ -2,5 +2,7 @@
   "Command_Prefix": "!",
   "Connection_Token": "// YOUR TOKEN",
   "AcceptBotCommands": false,
-  "AlertOnUnknownCommands": false
+  "AlertOnUnknownCommands": false,
+  "MalUsername": "//myanimelist_username",
+  "MalPassword": "//myanimelist_password"
 }

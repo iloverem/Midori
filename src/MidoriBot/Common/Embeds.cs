@@ -32,9 +32,9 @@ namespace MidoriBot.Common
 
     public class NormalEmbed : EmbedBase
     {
-        public NormalEmbed(byte Red = 0, byte Green = 0, byte Blue = 255)
+        public NormalEmbed(byte Red = 51, byte Green = 255, byte Blue = 204)
         {
-            Color = new Color(0, 0, 250);
+            Color = new Color(Red, Green, Blue);
         }
     }
 }
