@@ -42,7 +42,7 @@ namespace MidoriBot.Modules
                 HEDesc.AppendLine($"**{Group.Key}**:");
                 foreach (CommandInfo Command in Group)
                 {
-                    HEDesc.AppendLine($"`{Command.Name}`: {Command.Summary}");
+                    HEDesc.AppendLine($"• `{Command.Name}`: {Command.Summary}");
                 }
             }
             HEDesc.AppendLine($"\nYou can use `{MidoriConfig.CommandPrefix}Help <command>` for more information on that command.");

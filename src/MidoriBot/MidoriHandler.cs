@@ -72,7 +72,7 @@ namespace MidoriBot
             CommandError.ThumbnailUrl = Context.Client.CurrentUser.AvatarUrl;
 
             // Unknown command
-            if ((Search.Error == Discord.Commands.CommandError.UnknownCommand && !MidoriConfig.AlertOnUnknownCommand)) return;
+            if (Search.Error == Discord.Commands.CommandError.UnknownCommand && !MidoriConfig.AlertOnUnknownCommand && !Context.IsPrivate) return;
 
             // Fields
             CommandError.AddField(Field =>
