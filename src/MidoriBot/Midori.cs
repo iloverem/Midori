@@ -49,6 +49,7 @@ namespace MidoriBot
             MidoriClient = new DiscordSocketClient(MidoriSocketConfig);
             MidoriCommands = new CommandService(MidoriCommandsConfig);
             CommandHandler = new MidoriHandler();
+            Console.WriteLine("Handover success.");
             Console.WriteLine("Created client, command service and command handler.");
 
             // Setup dependencies
