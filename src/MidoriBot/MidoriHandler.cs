@@ -68,7 +68,7 @@ namespace MidoriBot
         {
             ErrorEmbed CommandError = new ErrorEmbed();
             CommandError.Title = "Something didn't work!";
-            CommandError.Description = $"I couldn't do what you wanted, {Context.User.Username}! Gomen nasai!";
+            CommandError.Description = $"I couldn't do what you wanted, {Context.User.Username}!";
             CommandError.ThumbnailUrl = Context.Client.CurrentUser.AvatarUrl;
 
             // Unknown command
@@ -85,7 +85,7 @@ namespace MidoriBot
             // Footer
             CommandError.WithFooter(Footer =>
             {
-                Footer.Text = $"Please report this to my master, {MidoriClient.GetUser(MidoriClient.GetApplicationInfoAsync().Result.Owner.Id).Username}!";
+                Footer.Text = $"Please report this to my creator, {MidoriClient.GetUser(MidoriClient.GetApplicationInfoAsync().Result.Owner.Id).Username}!";
             });
 
             // Send error message
