@@ -30,11 +30,12 @@ namespace MidoriBot
             Midori MidoriBot = new Midori();
             try
             {
+                Console.WriteLine("Attempting to hand over control to async...");
                 MidoriBot.Start().GetAwaiter().GetResult();
-                Console.WriteLine("Handing over control to async...");
             }
             catch (HttpRequestException e)
             {
+                Console.WriteLine("Failed to complete handover.");
                 Console.WriteLine($"Cannot connect to Discord! D:");
                 Console.WriteLine($"Exception details:");
                 Console.WriteLine(e);
