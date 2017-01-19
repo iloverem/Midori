@@ -54,6 +54,11 @@ namespace MidoriBot.Modules.Info
                 x.Name = "Language";
                 x.Value = "C#, proudly using .NET Core.";
             });
+            Info.AddField(x =>
+            {
+                x.Name = "Total Servers";
+                x.Value = Context.Client.GetGuildsAsync().Result.Count.ToString();
+            });
 
             Info.Footer = (new MEmbedFooter(Context.Client)).WithText("Bot Information");
             await Context.Channel.SendEmbedAsync(Info);

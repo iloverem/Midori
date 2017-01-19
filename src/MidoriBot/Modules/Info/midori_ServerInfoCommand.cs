@@ -17,44 +17,60 @@ namespace MidoriBot.Modules.Info
         {
             SocketGuild Guild = Context.Guild as SocketGuild;
             NormalEmbed Embed = new NormalEmbed();
-            Embed.Title = $"Information for server {Guild.Name}";
+            Embed.Title = $"Server {Guild.Name}";
             Embed.ThumbnailUrl = Guild.IconUrl;
+            int TotalRoles = Guild.Roles.Count;
+            string VoiceRegion = (Context.Client.GetVoiceRegionAsync(Guild.VoiceRegionId)).Result.Name;
+            string VerificationLevel = Guild.VerificationLevel.ToString();
+            int VoiceChannels = Guild.GetVoiceChannelsAsync().Result.Count();
+            int TextChannels = Guild.GetTextChannelsAsync().Result.Count();
+            string Members = $"{(Guild.Users.Where(User => (User.Status == UserStatus.Online))).Count()} Online / {Guild.Users.Count.ToString()} Total";
+            string Owner = Context.Client.GetUserAsync(Guild.OwnerId).Result.Username;
+
             Embed.AddField(x =>
             {
                 x.Name = "Roles";
-                x.Value = Guild.Roles.Count.ToString();
+                x.Value = TotalRoles.ToString();
                 x.IsInline = true;
+            });
+            Embed.AddField(x =>
+            {
+                x.Name = "Voice Region";
+                x.IsInline = true;
+                x.Value = VoiceRegion;
             });
             Embed.AddField(x =>
             {
                 x.Name = "Verification Level";
-                x.Value = Guild.VerificationLevel.ToString();
+                x.Value = VerificationLevel;
                 x.IsInline = true;
             });
             Embed.AddField(x =>
             {
-                x.Value = Guild.GetVoiceChannelsAsync().Result.Count().ToString();
+                x.Value = VoiceChannels.ToString();
                 x.IsInline = true;
                 x.Name = "Voice Channels";
             });
             Embed.AddField(x =>
             {
                 x.Name = "Text Channels";
-                x.Value = Guild.GetTextChannelsAsync().Result.Count().ToString();
+                x.Value = TextChannels.ToString();
                 x.IsInline = true;
             });
             Embed.AddField(x =>
             {
-                x.Value = Guild.Users.Count.ToString();
+                x.Value = Members;
                 x.Name = "Total Members";
                 x.IsInline = true;
             });
             Embed.AddField(x =>
             {
                 x.Name = "Owner";
-                x.Value = Context.Client.GetUserAsync(Guild.OwnerId).Result.Username;
+                x.Value = Owner;
                 x.IsInline = true;
             });
+            Embed.Description = $"{Guild.Name} is a Discord server with {Guild.Users.Count} {(Guild.Users.Count > 1 ? "members" : "member")}, with {(Guild.Users.Where(User => (User.Status == UserStatus.Online))).Count()} online. It has {VoiceChannels} voice {(VoiceChannels > 1 ? "channels": "channel")}, {TextChannels} text channels, a voice region of {VoiceRegion} and {TotalRoles} {(TotalRoles > 1 ? "roles" : "role")}. It is being operated by {Owner}. If you want to chat here, you're going to need Verification Level {VerificationLevel}.";
+            Embed.Footer = (new MEmbedFooter(Context.Client)).WithText($"Server ID: {Guild.Id}");
             await Context.Channel.SendEmbedAsync(Embed);
         }
     }

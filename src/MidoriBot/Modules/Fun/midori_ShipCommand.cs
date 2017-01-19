@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Discord.Commands;
 using MidoriBot.Common.Preconditions;
 using Discord.WebSocket;
+using MidoriBot.Common;
 
 namespace MidoriBot.Modules.Fun
 {
@@ -30,7 +31,7 @@ namespace MidoriBot.Modules.Fun
                     RandomMember2 = RandomClient.Next(1, GuildMemberCount);
                 }
             }
-            await ReplyAsync($"<3 `{((Context.Guild as SocketGuild).Users.ElementAt(RandomMember1))}` x `{((Context.Guild as SocketGuild).Users.ElementAt(RandomMember2))}` <3");
+            await ReplyAsync($"<3 `{Extensions.GetEffectiveName(((Context.Guild as SocketGuild).Users.ElementAt(RandomMember1)))}` x `{((Extensions.GetEffectiveName((Context.Guild as SocketGuild).Users.ElementAt(RandomMember2))))}` <3");
         }
     }
 }

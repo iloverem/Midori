@@ -16,6 +16,7 @@ namespace MidoriBot.Events
             Console.WriteLine("Accepting bot commands: " + (MidoriConfig.AcceptBotCommands ? "Yes." : "No."));
             Console.WriteLine("Alerting on unknown command: " + (MidoriConfig.AlertOnUnknownCommand ? "Yes." : "No."));
             Console.WriteLine("=====");
+            await Task.Yield();
         }
     }
 }

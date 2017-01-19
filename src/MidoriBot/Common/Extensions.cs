@@ -19,6 +19,14 @@ namespace MidoriBot.Common
                 {
                     Ret.Add(Command);
                 }
+                else
+                {
+                    PreconditionAttribute RequireContext = Command.Preconditions.First(a => a is RequireContextAttribute);
+                    if (Command.Preconditions.Contains(RequireContext))
+                    {
+                        Ret.Add(Command);
+                    }
+                }
             }
             return Ret;
         }
@@ -28,6 +36,17 @@ namespace MidoriBot.Common
         {
             if (Boolean.ToUpper() == "true") return true;
             else return false;
+        }
+        public static string GetEffectiveName(SocketGuildUser TargetUser)
+        {
+            if (TargetUser.Nickname != null)
+            {
+                return TargetUser.Nickname;
+            }
+            else
+            {
+                return TargetUser.Username;
+            }
         }
     }
 }
