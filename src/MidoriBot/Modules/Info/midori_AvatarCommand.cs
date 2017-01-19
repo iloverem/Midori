@@ -19,7 +19,6 @@ namespace MidoriBot.Modules.Info
             NormalEmbed AvatarEmbed = new NormalEmbed();
             AvatarEmbed.Title = TargetUser.GetEffectiveName();
             AvatarEmbed.ImageUrl = TargetUser.AvatarUrl;
-            AvatarEmbed.WithAuthor((new EmbedAuthorBuilder()).WithIconUrl(TargetUser.AvatarUrl));
             await Context.Channel.SendEmbedAsync(AvatarEmbed);
         }
     }
