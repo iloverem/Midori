@@ -10,7 +10,7 @@ namespace MidoriBot
 {
     public class Midori
     {
-        public DiscordSocketClient MidoriClient;
+        public static DiscordSocketClient MidoriClient;
         public DiscordSocketConfig MidoriSocketConfig = new DiscordSocketConfig
         {
             DownloadUsersOnGuildAvailable = true,
@@ -42,7 +42,7 @@ namespace MidoriBot
             MidoriDeps.Add(MidoriCommands);
 
             // Events handler
-            MidoriEvents MidoriEvents = new MidoriEvents(MidoriDeps);
+            MidoriEvents MidoriEvents = new MidoriEvents();
             MidoriEvents.Install();
 
             // Login and connect

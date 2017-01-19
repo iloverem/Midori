@@ -26,7 +26,7 @@ namespace MidoriBot.Common
             await Channel.SendMessageAsync("", false, Embed);
         public static bool GetBooleanFromString(string Boolean)
         {
-            if (Boolean == "true") return true;
+            if (Boolean.ToUpper() == "true") return true;
             else return false;
         }
     }

@@ -56,7 +56,7 @@ namespace MidoriBot
             {
                 IResult Result = await MidoriCommands.ExecuteAsync(Context, ArgPos, MidoriDeps, MultiMatchHandling.Best);
 
-                Logging.LogMessage(LogLevel.Info, LogEvent.Command, $"{Command?.Name ?? Message.Content.Substring(ArgPos).Split(' ').First()} => {(Result.IsSuccess ? Result.ToString() : Result.Error.ToString())} | Server: [{(Context.IsPrivate ? "Private." : Context.Guild.Name)}] | {(Context.IsPrivate ? "Private." : $"Channel: #{Context.Channel.Name} ")} | Author: ({Context.User}) || {Message.Content.Substring(Message.Content.Split(' ').First().Length)}");
+                Logging.LogMessage(LogLevel.Info, LogEvent.Command, $"{Command?.Name ?? Message.Content.Substring(ArgPos).Split(' ').First()} => {(Result.IsSuccess ? Result.ToString() : Result.Error.ToString())} | Server: [{(Context.IsPrivate ? "Private." : Context.Guild.Name)}] | {(Context.IsPrivate ? "Private." : $"Channel: #{Context.Channel.Name} ")} | Author: ({Context.User})");
                 if (!Result.IsSuccess)
                 {
                     await OnCommandError(Result, Context);

@@ -6,19 +6,8 @@ using System.Text;
 
 namespace MidoriBot.Common
 {
-    public enum LogLevel
-    {
-        Info,
-        Warning,
-        Danger,
-        Crit
-    }
-
-    public enum LogEvent
-    {
-        Command,
-        Breakpoint
-    }
+    public enum LogLevel { Info, Warning, Danger, Crit }
+    public enum LogEvent { Breakpoint, Command }
 
     public static class Logging
     {
@@ -50,6 +39,8 @@ namespace MidoriBot.Common
                     Builder.AppendLine("Log type: Command");
                     break;
             }
+            Builder.AppendLine(LogMessage);
+            Console.WriteLine(Builder.ToString());
         }
     }
 }

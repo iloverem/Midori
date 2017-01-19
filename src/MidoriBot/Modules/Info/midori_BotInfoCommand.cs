@@ -17,17 +17,44 @@ namespace MidoriBot.Modules.Info
         {
             NormalEmbed Info = new NormalEmbed();
             Info.Title = "Bot Information";
-            Info.Description = MidoriConfig.BotDescription;
+            Info.Description = MidoriConfig.GetDescription();
+            Info.ThumbnailUrl = Context.Client.CurrentUser.AvatarUrl;
             Info.AddField(MD =>
             {
                 MD.Name = "Bot Version";
                 MD.Value = MidoriConfig.MidoriVersion;
+                MD.IsInline = true;
             });
             Info.AddField(MD =>
             {
                 MD.Name = "Owner";
                 MD.Value = Context.Client.GetUserAsync(Context.Client.GetApplicationInfoAsync().Result.Owner.Id).Result.Username;
+                MD.IsInline = true;
             });
+            Info.AddField(x =>
+            {
+                x.Name = "Discriminator";
+                x.Value = Context.Client.CurrentUser.Discriminator;
+            });
+            Info.AddField(x =>
+            {
+                x.Name = "Game";
+                if (Context.Client.CurrentUser.Game.HasValue)
+                    x.Value = "Playing " + Context.Client.CurrentUser.Game.Value;
+                else
+                    x.Value = "Not playing anything.";
+            });
+            Info.AddField(x =>
+            {
+                x.Name = "Status";
+                x.Value = "Happy serving commands!";
+            });
+            Info.AddField(x =>
+            {
+                x.Name = "Language";
+                x.Value = "C#, proudly using .NET Core.";
+            });
+
             Info.Footer = (new MEmbedFooter(Context.Client)).WithText("Bot Information");
             await Context.Channel.SendEmbedAsync(Info);
         }

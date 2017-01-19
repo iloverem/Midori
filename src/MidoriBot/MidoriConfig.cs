@@ -10,7 +10,10 @@ namespace MidoriBot
     {
         public static bool AcceptBotCommands = Extensions.GetBooleanFromString(Environment.GetEnvironmentVariable("Midori_AcceptBotCommands"));
         public static bool AlertOnUnknownCommand = Extensions.GetBooleanFromString(Environment.GetEnvironmentVariable("Midori_AlertOnUnknownCommand"));
-        public static string BotDescription = Environment.GetEnvironmentVariable("Midori_BotDescription");
+        public static string GetDescription()
+        {
+            return Midori.MidoriClient.GetApplicationInfoAsync().Result.Description;
+        }
         public static string CommandPrefix = Environment.GetEnvironmentVariable("Midori_CommandPrefix");
         public static string ConnectionToken = Environment.GetEnvironmentVariable("Midori_ConnectionToken");
         public static string MidoriVersion = "1.0";

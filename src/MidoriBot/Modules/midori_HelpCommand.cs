@@ -23,34 +23,33 @@ namespace MidoriBot.Modules
             MidoriDeps = _MidoriDeps;
         }
 
-        [Command("Help"), Summary("DMs help information."), Hidden]
-        public async Task Help()
+        [Command("Help"), Summary("View all my commands!"), Hidden, MinPermissions(AccessLevel.User)]
+        public async Task CommandHelp()
         {
             IEnumerable<IGrouping<string, CommandInfo>> CommandGroups = (await MidoriCommands.Commands.CheckConditions(Context, MidoriDeps))
                 .Where(c => !c.Preconditions.Any(p => p is HiddenAttribute))
                 .GroupBy(c => (c.Module.IsSubmodule ? c.Module.Parent.Name : c.Module.Name));
 
-            StringBuilder HelpCommands = new StringBuilder();
+            NormalEmbed HelpEmbed = new NormalEmbed();
+            StringBuilder HEDesc = new StringBuilder();
 
-            HelpCommands.AppendLine(MidoriConfig.BotDescription);
-            HelpCommands.AppendLine("**You can use the following commands:**\n");
+            HelpEmbed.Title = "My Commands";
+            HelpEmbed.ThumbnailUrl = Context.Client.CurrentUser.AvatarUrl;
+            HEDesc.AppendLine("**You can use the following commands:**");
 
             foreach (IGrouping<string, CommandInfo> Group in CommandGroups)
             {
-                List<string> Commands = new List<string>();
+                HEDesc.AppendLine($"**{Group.Key}**:");
                 foreach (CommandInfo Command in Group)
                 {
-                    if (Command.Module.IsSubmodule)
-                        Commands.Add($"`{Command.Module.Name}*`");
-                    else
-                        Commands.Add($"`{Command.Name}`");
+                    HEDesc.AppendLine($"`{Command.Name}`: {Command.Summary}");
                 }
-
-                HelpCommands.AppendLine($"**{Group.Key}**: {string.Join(" ", Commands.Distinct())}");
             }
-            HelpCommands.AppendLine($"\nYou can use `{MidoriConfig.CommandPrefix}Help <command>` for more information on that command.");
+            HEDesc.AppendLine($"\nYou can use `{MidoriConfig.CommandPrefix}Help <command>` for more information on that command.");
 
-            await Context.Channel.SendMessageAsync(HelpCommands.ToString());
+            HelpEmbed.Description = HEDesc.ToString();
+            await (Context.User.CreateDMChannelAsync().Result).SendEmbedAsync(HelpEmbed);
+            await Context.Channel.SendMessageAsync($"{Context.User.Mention}, help sent to your Direct Messages!");
         }
 
         [Command("Help"), Summary("Shows summary for a command."), Hidden]
