@@ -7,8 +7,7 @@ Check that .NET Core is installed from the Command Prompt (`dotnet --version`)~~
 * **If you're using a version from Releases, the correct version of .NET Core is included already for you. :D**
 * Download the latest version of Midori from Releases  
 * Rename `midori_configTEMPLATE.json` to `midori_config.json` and fill in the respective values inside it  
-* Open a command prompt where `MidoriBot.dll` is  
-* Run `dotnet MidoriBot.dll`.
+* Run `MidoriBot.exe` or `_Run MidoriBot` (at the top)  
   
 # Building
 You need: 
