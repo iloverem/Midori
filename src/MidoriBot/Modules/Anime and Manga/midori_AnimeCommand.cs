@@ -16,15 +16,6 @@ namespace MidoriBot.Modules.Anime_and_Manga
         [Command("Anime"), Summary("Gets anime information from MyAnimeList.")]
         public async Task AnimeCommand([Remainder, Summary("Anime to search for.")] string AnimeTarget)
         {
-            /*var request = WebRequest.Create("https://myanimelist.net/api/anime/search.xml?q=full+metal");
-            SetBasicAuthHeader(request, "midoribot", "$MidoriBot212121212121212121");
-            var response = await request.GetRequestStreamAsync();
-            /*XmlDocument XMLResponse = new XmlDocument();
-            XMLResponse.Load(response);
-            XmlNodeList AnimeTitle = XMLResponse.GetElementsByTagName("title");
-            await ReplyAsync(AnimeTitle[0].InnerText);
-            await ReplyAsync("hello");
-            */
             string ModifiedAnimeTarget = AnimeTarget.Replace(' ', '+');
             Uri uri = new Uri($"https://myanimelist.net/api/anime/search.xml?q={ModifiedAnimeTarget}");
 
@@ -40,18 +31,29 @@ namespace MidoriBot.Modules.Anime_and_Manga
 
             var response = await objRegistration.GetResponseAsync();
             XmlDocument XMLResponse = new XmlDocument();
-            XMLResponse.Load(response.GetResponseStream());
+            try
+            {
+                XMLResponse.Load(response.GetResponseStream());
+            }
+            catch
+            {
+                await ReplyAsync(":warning: I couldn't find that anime.");
+                return;
+            }
             NormalEmbed AnimeEmbed = new NormalEmbed();
             AnimeEmbed.Title = $"{GetInnerText(XMLResponse.GetElementsByTagName("title"))}{(GetInnerText(XMLResponse.GetElementsByTagName("english")) != null ? " (" + GetInnerText(XMLResponse.GetElementsByTagName("title")) + ")" : "")}";
             AnimeEmbed.Url = $"http://myanimelist.net/anime/{GetInnerText(XMLResponse.GetElementsByTagName("id"))}";
             AnimeEmbed.Description = FormatDescription(GetInnerText(XMLResponse.GetElementsByTagName("synopsis")));
-            AnimeEmbed.ImageUrl = GetInnerText(XMLResponse.GetElementsByTagName("image"));
-            AnimeEmbed.AddField(x =>
+            AnimeEmbed.ThumbnailUrl = GetInnerText(XMLResponse.GetElementsByTagName("image"));
+            if (GetInnerText(XMLResponse.GetElementsByTagName("episodes")) != "0")
             {
-                x.Name = "Episodes";
-                x.Value = GetInnerText(XMLResponse.GetElementsByTagName("episodes"));
-                x.IsInline = true;
-            });
+                AnimeEmbed.AddField(x =>
+                {
+                    x.Name = "Episodes";
+                    x.Value = GetInnerText(XMLResponse.GetElementsByTagName("episodes"));
+                    x.IsInline = true;
+                });
+            }
             AnimeEmbed.AddField(a =>
             {
                 a.Name = "Type";
@@ -67,7 +69,7 @@ namespace MidoriBot.Modules.Anime_and_Manga
             AnimeEmbed.AddField(a =>
             {
                 a.Name = "Start Date / End Date";
-                a.Value = $"{GetInnerText(XMLResponse.GetElementsByTagName("start_date"))} / {GetInnerText(XMLResponse.GetElementsByTagName("end_date"))}";
+                a.Value = $"{GetInnerText(XMLResponse.GetElementsByTagName("start_date"))}{(GetInnerText(XMLResponse.GetElementsByTagName("end_date")) != "0000-00-00" ?  " / " + GetInnerText(XMLResponse.GetElementsByTagName("end_date")) : "")}";
                 a.IsInline = true;
             });
             await Context.Channel.SendEmbedAsync(AnimeEmbed);
