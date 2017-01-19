@@ -61,8 +61,17 @@ namespace MidoriBot
             CommandHandler = new MidoriHandler();
             Console.WriteLine("Handover success.");
             Console.WriteLine("Created client, command service and command handler.");
-
-            // Import JSON
+            try
+            {
+                // Import JSON
+                StreamReader RawOpen = File.OpenText(@"./midori_config.json");
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("You dumb shit ! I can't find midori_config.json. Follow this guide and try again: https://github.com/lofdat/Midori/blob/master/README.md");
+                Environment.FailFast("cannot find midori_config.json");
+                await Task.Delay(-1);
+            }
             StreamReader Raw = File.OpenText(@"./midori_config.json");
             JsonTextReader TextReader = new JsonTextReader(Raw);
             JObject MidoriJConfig = (JObject)JToken.ReadFrom(TextReader);
