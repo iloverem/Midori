@@ -56,6 +56,7 @@ namespace MidoriBot.Modules
         public async Task SpecificHelp(string cmdname)
         {
             StringBuilder sb = new StringBuilder();
+            NormalEmbed e = new NormalEmbed();
             IEnumerable<CommandInfo> Commands = (await MidoriCommands.Commands.CheckConditions(Context, MidoriDeps))
                 .Where(c => (c.Aliases.FirstOrDefault().Equals(cmdname, StringComparison.OrdinalIgnoreCase) ||
                 (c.Module.IsSubmodule ? c.Module.Aliases.FirstOrDefault().Equals(cmdname, StringComparison.OrdinalIgnoreCase) : false))
@@ -63,15 +64,20 @@ namespace MidoriBot.Modules
 
             if (Commands.Any())
             {
-                sb.AppendLine($"{Commands.Count()} {(Commands.Count() > 1 ? $"entries" : "entry")} for `{cmdname}`");
+                await ReplyAsync($"{Commands.Count()} {(Commands.Count() > 1 ? $"entries" : "entry")} for `{cmdname}`");
 
                 foreach (CommandInfo Command in Commands)
                 {
-                    sb.AppendLine($"**Summary**");
-                    sb.AppendLine($"{Command.Summary ?? "No summary :C"}");
-                    sb.AppendLine("**Usage**");
-                    sb.AppendLine($"{MidoriConfig.CommandPrefix}{(Command.Module.IsSubmodule ? $"{Command.Module.Name} " : "")}{Command.Name} " + string.Join(" ", Command.Parameters.Select(p => formatParam(p))).Replace("`", ""));
-                    sb.AppendLine();
+                    NormalEmbed x = new NormalEmbed();
+                    x.Title = $"{Command.Name}";
+                    x.Description = (Command.Summary ?? "No summary.");
+                    x.AddField(a =>
+                    {
+                        a.Name = "Usage";
+                        a.IsInline = true;
+                        a.Value = $"{MidoriConfig.CommandPrefix}{(Command.Module.IsSubmodule ? $"{Command.Module.Name} " : "")}{Command.Name} " + string.Join(" ", Command.Parameters.Select(p => formatParam(p))).Replace("`", "");
+                    });
+                    await Context.Channel.SendEmbedAsync(x);
                 }
             }
             else
@@ -79,7 +85,6 @@ namespace MidoriBot.Modules
                 await ReplyAsync($"I couldn't find any command matching \"{cmdname}\". :(");
                 return;
             }
-            await ReplyAsync(sb.ToString());
         }
 
         private string formatParam(ParameterInfo param)

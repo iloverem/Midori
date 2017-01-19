@@ -37,7 +37,7 @@ namespace MidoriBot.Common
             if (Boolean.ToUpper() == "true") return true;
             else return false;
         }
-        public static string GetEffectiveName(SocketGuildUser TargetUser)
+        public static string GetEffectiveName(this SocketGuildUser TargetUser)
         {
             if (TargetUser.Nickname != null)
             {

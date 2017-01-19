@@ -38,5 +38,11 @@ namespace MidoriBot.Modules.Moderation
         {
             await TargetUser.Guild.AddBanAsync(TargetUser);
         }
+        [Command("Prune"), Summary("Deletes <input> messages from the current channel."), RequireUserPermission(GuildPermission.ManageMessages), RequireBotPermission(GuildPermission.ManageMessages)]
+        public async Task PruneCommand(string MessagesToPrune)
+        {
+            await ReplyAsync(MessagesToPrune);
+            await Context.Channel.DeleteMessagesAsync(Context.Channel.GetMessagesAsync(int.Parse(MessagesToPrune)) as IEnumerable<IMessage>);
+        }
     }
 }
