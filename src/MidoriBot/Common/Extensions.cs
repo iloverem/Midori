@@ -21,7 +21,7 @@ namespace MidoriBot.Common
                 }
                 else
                 {
-                    PreconditionAttribute RequireContext = Command.Preconditions.First(a => a is RequireContextAttribute);
+                    PreconditionAttribute RequireContext = Command.Preconditions.FirstOrDefault(a => a is RequireContextAttribute);
                     if (Command.Preconditions.Contains(RequireContext))
                     {
                         Ret.Add(Command);

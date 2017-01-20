@@ -71,8 +71,28 @@ namespace MidoriBot
             CommandError.Description = $"I couldn't do what you wanted, {Context.User.Username}!";
             CommandError.ThumbnailUrl = Context.Client.CurrentUser.AvatarUrl;
 
-            // Unknown command
-            if (Search.Error == Discord.Commands.CommandError.UnknownCommand && !(bool)Midori.MidoriConfig["AlertOnUnknownCommands"] && !Context.IsPrivate) return;
+            // Adding in errors which should not be reported to the bot creator
+            Dictionary<CommandError, bool> KnownErrors = new Dictionary<CommandError, bool>
+            {
+                {Discord.Commands.CommandError.UnmetPrecondition, false },
+                {Discord.Commands.CommandError.UnknownCommand, !(bool)Midori.MidoriConfig["AlertOnUnknownCommands"] },
+                {Discord.Commands.CommandError.BadArgCount, false }
+            };
+            // Explanation:
+            // I don't want the bot's footer to say "Report this" if it's the users fault.
+            // So, in the above dictionary, the bool is whether to say "Report this."
+            // the below logic finds the search.error in the dictionary and reflects on sayreport.
+
+            bool SayReport;
+
+            if (KnownErrors.ContainsKey(Search.Error.Value))
+            {
+                SayReport = KnownErrors[Search.Error.Value];
+            }
+            else
+            {
+                SayReport = true;
+            }
 
             // Fields
             CommandError.AddField(Field =>
@@ -82,11 +102,20 @@ namespace MidoriBot
                 Field.Value = Search.ErrorReason;
             });
 
-            // Footer
-            CommandError.WithFooter(Footer =>
+            if (Search.Error == Discord.Commands.CommandError.UnknownCommand && !(bool)Midori.MidoriConfig["AlertOnUnknownCommands"] && !Context.IsPrivate)
             {
-                Footer.Text = $"Please report this to my creator, {MidoriClient.GetUser(MidoriClient.GetApplicationInfoAsync().Result.Owner.Id).Username}!";
-            });
+                SayReport = false;
+                return;
+            }
+
+            // Footer
+            if (SayReport)
+            {
+                CommandError.WithFooter(Footer =>
+                {
+                    Footer.Text = $"Please report this to my creator, {MidoriClient.GetUser(MidoriClient.GetApplicationInfoAsync().Result.Owner.Id).Username}!";
+                });
+            }
 
             // Send error message
             await Context.Channel.SendEmbedAsync(CommandError);
