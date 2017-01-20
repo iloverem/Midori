@@ -60,7 +60,7 @@ namespace MidoriBot.Modules
                     }
                 }
             }
-            HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <commandorgroup>` for more information on that command/group.");
+            HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <command>` for more information on that command");
 
             HelpEmbed.Description = HEDesc.ToString();
             await (Context.User.CreateDMChannelAsync().Result).SendEmbedAsync(HelpEmbed);
@@ -73,28 +73,6 @@ namespace MidoriBot.Modules
         [Command("Help"), Summary("Shows summary for a command or group."), Hidden]
         public async Task SpecificHelp([Remainder] string cmdname)
         {
-            IEnumerable<IGrouping<string, CommandInfo>> CommandGroups = (await MidoriCommands.Commands.CheckConditions(Context, MidoriDeps))
-                .Where(c => !c.Preconditions.Any(p => p is HiddenAttribute))
-                .GroupBy(c => (c.Module.IsSubmodule ? c.Module.Parent.Name : c.Module.Name));
-
-            IGrouping<string, CommandInfo> Target = CommandGroups.FirstOrDefault(x => x.Key.ToUpper() == cmdname.ToUpper());
-            if (Target != null)
-            {
-                StringBuilder HEDesc = new StringBuilder();
-                HEDesc.AppendLine($"**{Target.Key}**:");
-                foreach (CommandInfo CommandDetails in Target)
-                {
-                    HEDesc.AppendLine($"• `{CommandDetails.Name}`: {CommandDetails.Summary}");
-                }
-                HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <commandorgroup>` for more information on that command/group.");
-                NormalEmbed ModuleHelp = new NormalEmbed();
-                ModuleHelp.Title = $"Group {Target.Key}";
-                ModuleHelp.Description = HEDesc.ToString();
-                await Context.User.CreateDMChannelAsync().GetAwaiter().GetResult().SendEmbedAsync(ModuleHelp);
-                await Context.Channel.SendMessageAsync($"{Context.User.Mention}, help for module `{Target.Key}` sent to your Direct Messages!");
-                return;
-            }
-
             StringBuilder sb = new StringBuilder();
             NormalEmbed e = new NormalEmbed();
             IEnumerable<CommandInfo> Commands = (await MidoriCommands.Commands.CheckConditions(Context, MidoriDeps))
@@ -136,7 +114,7 @@ namespace MidoriBot.Modules
             }
             else
             {
-                await ReplyAsync($":warning: I couldn't find any command or group matching `{cmdname}`.");
+                await ReplyAsync($":warning: I couldn't find any command matching `{cmdname}`.");
                 return;
             }
         }
