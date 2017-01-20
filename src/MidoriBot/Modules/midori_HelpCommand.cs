@@ -60,7 +60,7 @@ namespace MidoriBot.Modules
                     }
                 }
             }
-            HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <command>` for more information on that command.");
+            HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <commandorgroup>` for more information on that command/group.");
 
             HelpEmbed.Description = HEDesc.ToString();
             await (Context.User.CreateDMChannelAsync().Result).SendEmbedAsync(HelpEmbed);
@@ -86,10 +86,12 @@ namespace MidoriBot.Modules
                 {
                     HEDesc.AppendLine($"• `{CommandDetails.Name}`: {CommandDetails.Summary}");
                 }
+                HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <commandorgroup>` for more information on that command/group.");
                 NormalEmbed ModuleHelp = new NormalEmbed();
                 ModuleHelp.Title = $"Group {Target.Key}";
                 ModuleHelp.Description = HEDesc.ToString();
-                await Context.Channel.SendEmbedAsync(ModuleHelp);
+                await Context.User.CreateDMChannelAsync().GetAwaiter().GetResult().SendEmbedAsync(ModuleHelp);
+                await Context.Channel.SendMessageAsync($"{Context.User.Mention}, help for module `{Target.Key}` sent to your Direct Messages!");
                 return;
             }
 
