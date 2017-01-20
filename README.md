@@ -32,3 +32,6 @@ Midori says thanks to:
 2.1: A first-run CLI to enter your credentials and set your configuration. [**This requires Roadmap 2.0 - a database is required for storing first-run data**]  
 ~~2.2: A first-run GUI (Windows Forms) to enter your credentials and set your configuration.~~ **[WPF is not available in .NET Core]**  
 Probably never: A public cloud-hosted version.  
+
+# License  
+This software is licensed under the **MIT License.** More information is available in LICENSE.md.
