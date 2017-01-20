@@ -23,7 +23,7 @@ namespace MidoriBot.Modules
             MidoriDeps = _MidoriDeps;
         }
 
-        [Command("Help"), Summary("View all my commands!"), Hidden, MinPermissions(AccessLevel.User)]
+        [Command("Help"), Summary("View all my commands!"), Hidden]
         public async Task CommandHelp()
         {
             IEnumerable<IGrouping<string, CommandInfo>> CommandGroups = (await MidoriCommands.Commands.CheckConditions(Context, MidoriDeps))
@@ -73,7 +73,7 @@ namespace MidoriBot.Modules
         }
 
         [Command("Help"), Summary("Shows summary for a command or group."), Hidden]
-        public async Task SpecificHelp([Remainder] string cmdname)
+        public async Task SpecificHelp(string cmdname)
         {
             StringBuilder sb = new StringBuilder();
             NormalEmbed e = new NormalEmbed();
