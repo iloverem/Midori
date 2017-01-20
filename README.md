@@ -15,7 +15,15 @@ You need:
 * VS 2015 / MSBuild
 * .NET Core
 
-Build instructions coming soon.
+Build instructions coming soon.  
+  
+# Acknowledgements  
+Midori uses and loves:
+* .NET Core (.NET Standard) | [GitHub](https://github.com/dotnet/core), [Website](https://dotnet.github.io/)  
+* Discord.Net (1.0 release) | [GitHub](https://github.com/RogueException/Discord.Net/), [Documentation](https://discord.foxbot.me/docs/)  
+Midori says thanks to:  
+* Ruby Rose/Hibiki | [GitHub](https://github.com/Nanabell/Hibiki)  
+* Discord API Server | [Discord Invite](https://discord.gg/7ym9k)
 
 # Roadmap
 1.3: More commands.  
