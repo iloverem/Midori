@@ -20,6 +20,6 @@ Build instructions coming soon.
 # Roadmap
 1.3: More commands.  
 2.0: Voice support, a database (for storing mutes, guild configurations, the rest).  
-2.1: A first-run CLI to enter your credentials and set your configuration.  
+2.1: A first-run CLI to enter your credentials and set your configuration. [**This requires Roadmap 2.0 - a database is required for storing first-run data**]  
 ~~2.2: A first-run GUI (Windows Forms) to enter your credentials and set your configuration.~~ **[WPF is not available in .NET Core]**  
 Probably never: A public cloud-hosted version.  
