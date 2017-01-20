@@ -12,14 +12,19 @@ namespace MidoriBot.Modules.Moderation
     [Name("Moderation")]
     public class midori_ModerationToolkit : ModuleBase
     {
-        [Command("Mute"), Summary("Mutes a member."), RequireUserPermission(GuildPermission.MuteMembers), RequireContext(ContextType.Guild), RequireBotPermission(GuildPermission.MuteMembers)]
+        [Command("Mute"), Summary("Mutes a member."), RequireUserPermission(GuildPermission.ManageRoles), RequireContext(ContextType.Guild), RequireBotPermission(GuildPermission.ManageRoles)]
         public async Task MuteCommand(SocketGuildUser TargetUser)
         {
             SocketRole MutedRole = TargetUser.Guild.Roles.First(x => x.Name == "Muted");
+            if (TargetUser.RoleIds.Contains(MutedRole.Id))
+            {
+                await ReplyAsync($"{TargetUser.Mention} is already muted.");
+                return;
+            }
             await TargetUser.AddRolesAsync(MutedRole);
             await ReplyAsync($"{TargetUser.Mention} has been muted.");
         }
-        [Command("Unmute"), Summary("Unmutes a member."), RequireUserPermission(GuildPermission.MuteMembers), RequireContext(ContextType.Guild), RequireBotPermission(GuildPermission.MuteMembers)]
+        [Command("Unmute"), Summary("Unmutes a member."), RequireUserPermission(GuildPermission.ManageRoles), RequireContext(ContextType.Guild), RequireBotPermission(GuildPermission.ManageRoles)]
         public async Task UnmuteCommand(SocketGuildUser TargetUser)
         {
             SocketRole MutedRole = TargetUser.Guild.Roles.First(x => x.Name == "Muted");

@@ -22,7 +22,7 @@ namespace MidoriBot.Modules.Anime_and_Manga
 
             CredentialCache credentials = new CredentialCache();
 
-            NetworkCredential netCredential = new NetworkCredential((string)Midori.MidoriConfig["MalUsername"], (string)Midori.MidoriConfig["MalPassword"]);
+            NetworkCredential netCredential = new NetworkCredential((string)Midori.MidoriCredentials["MalUsername"], (string)Midori.MidoriCredentials["MalPassword"]);
 
             credentials.Add(uri, "Basic", netCredential);
 

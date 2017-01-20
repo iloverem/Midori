@@ -23,7 +23,7 @@ namespace MidoriBot.Modules.Anime_and_Manga
 
             CredentialCache credentials = new CredentialCache();
 
-            NetworkCredential netCredential = new NetworkCredential((string)Midori.MidoriConfig["MalUsername"], (string)Midori.MidoriConfig["MalPassword"]);
+            NetworkCredential netCredential = new NetworkCredential((string)Midori.MidoriCredentials["MalUsername"], (string)Midori.MidoriCredentials["MalPassword"]);
 
             credentials.Add(uri, "Basic", netCredential);
 
@@ -41,7 +41,7 @@ namespace MidoriBot.Modules.Anime_and_Manga
                 return;
             }
             NormalEmbed AnimeEmbed = new NormalEmbed();
-            AnimeEmbed.Title = $"{GetInnerText(XMLResponse.GetElementsByTagName("title"))} {((GetInnerText(XMLResponse.GetElementsByTagName("english"))) != null ? $" {GetInnerText(XMLResponse.GetElementsByTagName("english"))}" : "")}";
+            AnimeEmbed.Title = $"{GetInnerText(XMLResponse.GetElementsByTagName("title"))} {((GetInnerText(XMLResponse.GetElementsByTagName("english"))) != null ? $" ({GetInnerText(XMLResponse.GetElementsByTagName("english"))})" : "")}";
             AnimeEmbed.Url = $"http://myanimelist.net/anime/{GetInnerText(XMLResponse.GetElementsByTagName("id"))}";
             AnimeEmbed.Description = FormatDescription(GetInnerText(XMLResponse.GetElementsByTagName("synopsis")));
             AnimeEmbed.ThumbnailUrl = GetInnerText(XMLResponse.GetElementsByTagName("image"));
@@ -101,7 +101,14 @@ namespace MidoriBot.Modules.Anime_and_Manga
             string x = Input;
             foreach (KeyValuePair<string, string> Pair in HTMLEntities)
             {
-                x = x.Replace(Pair.Key, Pair.Value);
+                try
+                {
+                    x = x.Replace(Pair.Key, Pair.Value);
+                }
+                catch
+                {
+
+                }
             }
             return x;
         }

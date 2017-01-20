@@ -13,6 +13,10 @@ namespace MidoriBot.Modules.Fun
         [Command("Say"), Summary("Says the input.")]
         public async Task SayCommand([Remainder] string WhatToSay)
         {
+            if ((Context.Guild.GetCurrentUserAsync().GetAwaiter().GetResult()).GuildPermissions.ManageMessages)
+            {
+                await Context.Message.DeleteAsync();
+            }
             await ReplyAsync(WhatToSay);
         }
     }
