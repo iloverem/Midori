@@ -70,9 +70,29 @@ namespace MidoriBot.Modules
             }
         }
 
-        [Command("Help"), Summary("Shows summary for a command."), Hidden]
-        public async Task SpecificHelp(string cmdname)
+        [Command("Help"), Summary("Shows summary for a command or group."), Hidden]
+        public async Task SpecificHelp([Remainder] string cmdname)
         {
+            IEnumerable<IGrouping<string, CommandInfo>> CommandGroups = (await MidoriCommands.Commands.CheckConditions(Context, MidoriDeps))
+                .Where(c => !c.Preconditions.Any(p => p is HiddenAttribute))
+                .GroupBy(c => (c.Module.IsSubmodule ? c.Module.Parent.Name : c.Module.Name));
+
+            IGrouping<string, CommandInfo> Target = CommandGroups.FirstOrDefault(x => x.Key.ToUpper() == cmdname.ToUpper());
+            if (Target != null)
+            {
+                StringBuilder HEDesc = new StringBuilder();
+                HEDesc.AppendLine($"**{Target.Key}**:");
+                foreach (CommandInfo CommandDetails in Target)
+                {
+                    HEDesc.AppendLine($"• `{CommandDetails.Name}`: {CommandDetails.Summary}");
+                }
+                NormalEmbed ModuleHelp = new NormalEmbed();
+                ModuleHelp.Title = $"Group {Target.Key}";
+                ModuleHelp.Description = HEDesc.ToString();
+                await Context.Channel.SendEmbedAsync(ModuleHelp);
+                return;
+            }
+
             StringBuilder sb = new StringBuilder();
             NormalEmbed e = new NormalEmbed();
             IEnumerable<CommandInfo> Commands = (await MidoriCommands.Commands.CheckConditions(Context, MidoriDeps))
@@ -114,7 +134,7 @@ namespace MidoriBot.Modules
             }
             else
             {
-                await ReplyAsync($":warning: I couldn't find any command matching \"`{cmdname}`\". :(");
+                await ReplyAsync($":warning: I couldn't find any command or group matching `{cmdname}`.");
                 return;
             }
         }
