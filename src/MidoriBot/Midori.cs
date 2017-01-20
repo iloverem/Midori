@@ -16,20 +16,20 @@ namespace MidoriBot
     {
         public static DiscordSocketClient MidoriClient;
         public static string Version = "1.0";
-        public DiscordSocketConfig MidoriSocketConfig = new DiscordSocketConfig
+        public static DiscordSocketConfig MidoriSocketConfig = new DiscordSocketConfig
         {
             DownloadUsersOnGuildAvailable = true,
             LogLevel = LogSeverity.Info,
             MessageCacheSize = 10
         };
-        public CommandService MidoriCommands;
+        public static CommandService MidoriCommands;
         public static Dictionary<string, object> MidoriConfig;
         public static Dictionary<string, object> MidoriCredentials;
-        public CommandServiceConfig MidoriCommandsConfig = new CommandServiceConfig
+        public static CommandServiceConfig MidoriCommandsConfig = new CommandServiceConfig
         {
             DefaultRunMode = RunMode.Sync
         };
-        public MidoriHandler CommandHandler;
+        public static MidoriHandler CommandHandler;
 
         public static string GetDescription()
         {
@@ -38,11 +38,10 @@ namespace MidoriBot
 
         public static void Main(string[] args)
         {
-            Midori MidoriBot = new Midori();
             try
             {
                 Console.WriteLine("Attempting to hand over control to async...");
-                MidoriBot.Start().GetAwaiter().GetResult();
+                Midori.Start().GetAwaiter().GetResult();
             }
             catch (HttpRequestException e)
             {
@@ -55,7 +54,7 @@ namespace MidoriBot
 
 
 
-        public async Task Start()
+        public static async Task Start()
         {
             MidoriClient = new DiscordSocketClient(MidoriSocketConfig);
             MidoriCommands = new CommandService(MidoriCommandsConfig);

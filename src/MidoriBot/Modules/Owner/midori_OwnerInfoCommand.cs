@@ -19,7 +19,7 @@ namespace MidoriBot.Modules.Owner
             Embed.Title = "Owner Information";
             sb.AppendLine("Current token: " + Midori.MidoriCredentials["Connection_Token"]);
             Embed.Description = sb.ToString();
-            await (Context.User.CreateDMChannelAsync().GetAwaiter().GetResult()).SendEmbedAsync(Embed);
+            await (await (Context.User.CreateDMChannelAsync())).SendEmbedAsync(Embed);
         }
     }
 }
