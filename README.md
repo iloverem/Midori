@@ -9,6 +9,7 @@ Midori is an open-source .NET Core C# bot for Discord.
 * Rename `credentials-template.json` to `credentials.json` and fill in the respective values inside it   
 * Open `midori_config.json` and edit to your will  
 * Run `MidoriBot.exe` or `_Run MidoriBot` (at the top)  
+**.NET Core is multiplatform.** Native Mac/Linux binaries coming soon!  
   
 # Building
 You need: 
