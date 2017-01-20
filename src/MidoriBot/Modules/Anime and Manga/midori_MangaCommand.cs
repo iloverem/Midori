@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Discord.Commands;
-using Discord.WebSocket;
 using System.Net;
-using System.Xml;
 using MidoriBot.Common;
+using System.Xml;
 
 namespace MidoriBot.Modules.Anime_and_Manga
 {
-    [Name("Anime and Manga")]
-    public class midori_AnimeCommand : ModuleBase
+	[Name("Anime and Manga")]
+    public class midori_MangaCommand : ModuleBase
     {
-        [Command("Anime"), Summary("Gets anime information from MyAnimeList.")]
-        public async Task AnimeCommand([Remainder, Summary("Anime to search for.")] string AnimeTarget)
+		[Command("Manga"), Summary("Gets manga information from MyAnimeList.")]
+        public async Task MangaCommand([Remainder, Summary("Manga to search for.")] string MangaTarget)
         {
-            string ModifiedAnimeTarget = AnimeTarget.Replace(' ', '+');
-            Uri uri = new Uri($"https://myanimelist.net/api/anime/search.xml?q={ModifiedAnimeTarget}");
+            string ModifiedMangaTarget = MangaTarget.Replace(' ', '+');
+            Uri uri = new Uri($"https://myanimelist.net/api/manga/search.xml?q={ModifiedMangaTarget}");
 
             HttpWebRequest objRegistration = (HttpWebRequest)WebRequest.Create(uri);
 
@@ -37,11 +36,11 @@ namespace MidoriBot.Modules.Anime_and_Manga
             }
             catch
             {
-                await ReplyAsync(":warning: I couldn't find that anime.");
+                await ReplyAsync(":warning: I couldn't find that manga.");
                 return;
             }
-            NormalEmbed AnimeEmbed = new NormalEmbed();
-            AnimeEmbed.Title = $"{GetInnerText(XMLResponse.GetElementsByTagName("title"))} {((GetInnerText(XMLResponse.GetElementsByTagName("english"))) != null ? $" {GetInnerText(XMLResponse.GetElementsByTagName("english"))}" : "")}";
+            /*NormalEmbed AnimeEmbed = new NormalEmbed();
+            AnimeEmbed.Title = $"{GetInnerText(XMLResponse.GetElementsByTagName("title"))}{(GetInnerText(XMLResponse.GetElementsByTagName("english")) != null ? " (" + GetInnerText(XMLResponse.GetElementsByTagName("title")) + ")" : "")}";
             AnimeEmbed.Url = $"http://myanimelist.net/anime/{GetInnerText(XMLResponse.GetElementsByTagName("id"))}";
             AnimeEmbed.Description = FormatDescription(GetInnerText(XMLResponse.GetElementsByTagName("synopsis")));
             AnimeEmbed.ThumbnailUrl = GetInnerText(XMLResponse.GetElementsByTagName("image"));
@@ -69,11 +68,59 @@ namespace MidoriBot.Modules.Anime_and_Manga
             AnimeEmbed.AddField(a =>
             {
                 a.Name = "Start Date / End Date";
-                a.Value = $"{GetInnerText(XMLResponse.GetElementsByTagName("start_date"))}{(GetInnerText(XMLResponse.GetElementsByTagName("end_date")) != "0000-00-00" ?  " / " + GetInnerText(XMLResponse.GetElementsByTagName("end_date")) : "")}";
+                a.Value = $"{GetInnerText(XMLResponse.GetElementsByTagName("start_date"))}{(GetInnerText(XMLResponse.GetElementsByTagName("end_date")) != "0000-00-00" ? " / " + GetInnerText(XMLResponse.GetElementsByTagName("end_date")) : "")}";
                 a.IsInline = true;
             });
             AnimeEmbed.Footer = (new MEmbedFooter(Context.Client)).WithText($"All information from the MyAnimeList API").WithIconUrl("http://i.imgur.com/vEy5Zaq.png");
             await Context.Channel.SendEmbedAsync(AnimeEmbed);
+			*/
+            NormalEmbed Manga = new NormalEmbed();
+            Manga.Title = $"{GetInnerText(XMLResponse.GetElementsByTagName("title"))} {((GetInnerText(XMLResponse.GetElementsByTagName("english"))) != null ? $" {GetInnerText(XMLResponse.GetElementsByTagName("english"))}" : "")}";
+            Manga.Description = FormatDescription(GetInnerText(XMLResponse.GetElementsByTagName("synopsis")));
+            Manga.ThumbnailUrl = GetInnerText(XMLResponse.GetElementsByTagName("image"));
+            if (GetInnerText(XMLResponse.GetElementsByTagName("chapters")) != "0")
+            {
+                Manga.AddField(f =>
+                {
+                    f.Name = "Chapters";
+                    f.Value = GetInnerText(XMLResponse.GetElementsByTagName("chapters"));
+                    f.IsInline = true;
+                });
+            }
+            if (GetInnerText(XMLResponse.GetElementsByTagName("volumes")) != "0")
+            {
+                Manga.AddField(f =>
+                {
+                    f.Name = "Volumes";
+                    f.Value = GetInnerText(XMLResponse.GetElementsByTagName("volumes"));
+                    f.IsInline = true;
+                });
+            }
+            Manga.AddField(f =>
+            {
+                f.Name = "Score";
+                f.Value = GetInnerText(XMLResponse.GetElementsByTagName("score"));
+                f.IsInline = true;
+            });
+            Manga.AddField(f =>
+            {
+                f.Name = "Type";
+                f.Value = GetInnerText(XMLResponse.GetElementsByTagName("type"));
+                f.IsInline = true;
+            });
+            Manga.AddField(f =>
+            {
+                f.Name = "Status";
+                f.Value = GetInnerText(XMLResponse.GetElementsByTagName("status"));
+                f.IsInline = true;
+            });
+            Manga.AddField(f =>
+            {
+                f.Name = "Start Date / End Date";
+                f.Value = $"{GetInnerText(XMLResponse.GetElementsByTagName("start_date"))} {((GetInnerText(XMLResponse.GetElementsByTagName("end_date"))) != "0000-00-00" ? " / " + GetInnerText(XMLResponse.GetElementsByTagName("end_date")) : "")}";
+                f.IsInline = true;
+            });
+            await Context.Channel.SendEmbedAsync(Manga);
         }
         private string GetInnerText(XmlNodeList NodeList)
         {

@@ -39,17 +39,35 @@ namespace MidoriBot.Modules
 
             foreach (IGrouping<string, CommandInfo> Group in CommandGroups)
             {
-                HEDesc.AppendLine($"**{Group.Key}**:");
-                foreach (CommandInfo Command in Group)
+                if (Group.Key == "Reactions" || Group.Key == "Emojis")
                 {
-                    HEDesc.AppendLine($"• `{Command.Name}`: {Command.Summary}");
+                    StringBuilder sb = new StringBuilder();
+                    List<string> reactions = new List<string> { };
+                    foreach (CommandInfo Command in Group)
+                    {
+                        reactions.Add("`" + Command.Name + "` ");
+                        sb.Append($"`{Command.Name}` ");
+
+                    }
+                    HEDesc.AppendLine($"**{Group.Key}**: " + sb.ToString());
+                }
+                else
+                {
+                    HEDesc.AppendLine($"**{Group.Key}**:");
+                    foreach (CommandInfo Command in Group)
+                    {
+                        HEDesc.AppendLine($"• `{Command.Name}`: {Command.Summary}");
+                    }
                 }
             }
             HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <command>` for more information on that command.");
 
             HelpEmbed.Description = HEDesc.ToString();
             await (Context.User.CreateDMChannelAsync().Result).SendEmbedAsync(HelpEmbed);
-            await Context.Channel.SendMessageAsync($"{Context.User.Mention}, help sent to your Direct Messages!");
+            if (!Context.IsPrivate)
+            {
+                await Context.Channel.SendMessageAsync($"{Context.User.Mention}, help sent to your Direct Messages!");
+            }
         }
 
         [Command("Help"), Summary("Shows summary for a command."), Hidden]
@@ -75,17 +93,19 @@ namespace MidoriBot.Modules
                     {
                         a.Name = "Usage";
                         a.IsInline = true;
-                        a.Value = $"{Midori.MidoriConfig["Command_Prefix"]}{(Command.Module.IsSubmodule ? $"{Command.Module.Name} " : "")}{Command.Name} " + string.Join(" ", Command.Parameters.Select(p => formatParam(p))).Replace("`", "");
+                        a.Value = $"{Midori.MidoriConfig["Command_Prefix"]}{(Command.Module.IsSubmodule ? $"{Command.Module.Name} " : "")}{Command.Name} " + string.Join(" ", Command.Parameters.Select(p => formatParam(p))).Replace("`", "") + " ";
                     });
                     x.AddField(a =>
                     {
                         a.Name = "Aliases";
                         a.IsInline = true;
                         StringBuilder s = new StringBuilder();
-                        foreach (string Alias in Command.Aliases)
+                        if (Command.Aliases.Any())
                         {
-                            if (!(Alias == Command.Aliases[0]))
+                            foreach (string Alias in Command.Aliases)
+                            {
                                 s.Append(Alias + " ");
+                            }
                         }
                         a.Value = $"{(Command.Aliases.Any() ? s.ToString() : "No aliases.")}";
                     });

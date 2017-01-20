@@ -7,9 +7,9 @@
   "dependencies": {
     "Discord.Net.Commands": "1.0.0-rc-00546",
     "Discord.Net.WebSocket": "1.0.0-rc-00546",
-    "Microsoft.AspNetCore.Mvc.Core": "1.0.1",
+    "Microsoft.AspNetCore.Mvc.Core": "1.1.0",
     "Microsoft.NETCore.App": "1.1.0",
-    "System.Xml.XmlDocument": "4.0.1"
+    "System.Xml.XmlDocument": "4.3.0"
   },
 
   "frameworks": {

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord.Commands;
 
-namespace MidoriBot.Modules.Emojis
+namespace MidoriBot.Modules.Reactions
 {
-    [Name("Emojis")]
-    public class midori_Emojis : ModuleBase
+    [Name("Reactions")]
+    public class midori_Reactions : ModuleBase
     {
         [Command("Lenny"), Summary("( ͡° ͜ʖ ͡°)")]
         public async Task LennyCommand() => await ReplyAsync("( ͡° ͜ʖ ͡°)");

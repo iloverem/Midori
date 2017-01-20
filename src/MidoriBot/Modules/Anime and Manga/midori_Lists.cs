@@ -9,7 +9,7 @@ namespace MidoriBot.Modules.Anime_and_Manga
     [Name("Anime and Manga")]
     public class midori_Lists : ModuleBase
     {
-        [Command("mal"), Summary("Gets your MyAnimeList library.")]
+        [Command("MAL"), Summary("Gets your MyAnimeList library.")]
         public async Task MALList([Summary("Your MAL username")] string username)
         {
             await ReplyAsync($"Here's your MyAnimeList animelist: http://myanimelist.net/animelist/{username}");
