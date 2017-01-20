@@ -14,16 +14,32 @@ namespace MidoriBot.Modules.Fun
     public class midori_QuoteCommand : ModuleBase
     {
         [Command("Quote"), Summary("Gets a quote.")]
-        public async Task QuoteCommand()
+        public async Task QuoteCommand([Summary("The seed will affect the choice of quote.")]Int64 Seed = 0)
         {
-            Uri uri = new Uri($"http://api.forismatic.com/api/1.0/?method=getQuote&format=xml&lang=en");
+            Uri uri;
+            if (Seed != 0)
+            {
+                if (Seed.ToString().Length <= 6)
+                {
+                    uri = new Uri($"http://api.forismatic.com/api/1.0/?method=getQuote&key={Seed}&format=xml&lang=en");
+                }
+                else
+                {
+                    await ReplyAsync(":warning: The seed must be less than 6 or empty.");
+                    return;
+                }
+            }
+            else
+            {
+                uri = new Uri($"http://api.forismatic.com/api/1.0/?method=getQuote&format=xml&lang=en");
+            }
 
             HttpWebRequest objRegistration = (HttpWebRequest)WebRequest.Create(uri);
 
             var response = await objRegistration.GetResponseAsync();
             XmlDocument XMLResponse = new XmlDocument();
             XMLResponse.Load(response.GetResponseStream());
-            await ReplyAsync(XMLResponse.GetElementsByTagName("quoteText")[0].InnerText + $" - *{XMLResponse.GetElementsByTagName("quoteAuthor")[0].InnerText}*");
+            await ReplyAsync(XMLResponse.GetElementsByTagName("quoteText")[0].InnerText + $" - _{XMLResponse.GetElementsByTagName("quoteAuthor")[0].InnerText}_");
         }
     }
 }
