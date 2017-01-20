@@ -11,7 +11,7 @@ namespace MidoriBot.Events
         {
             Console.WriteLine("=====");
             Console.WriteLine((Midori.MidoriClient.GetApplicationInfoAsync().GetAwaiter().GetResult()).Description);
-            Console.WriteLine("Active token: " + Midori.MidoriConfig["Connection_Token"]);
+            Console.WriteLine("Active token: " + Midori.MidoriCredentials["Connection_Token"]);
             Console.WriteLine("Active command prefix: " + Midori.MidoriConfig["Command_Prefix"]);
             Console.WriteLine("Accepting bot commands: " + ((bool)Midori.MidoriConfig["AcceptBotCommands"] ? "Yes." : "No."));
             Console.WriteLine("Alerting on unknown command: " + ((bool)Midori.MidoriConfig["AlertOnUnknownCommands"] ? "Yes." : "No."));

@@ -41,15 +41,15 @@ namespace MidoriBot.Modules
             {
                 if (Group.Key == "Reactions" || Group.Key == "Emojis")
                 {
-                    StringBuilder sb = new StringBuilder();
+                    StringBuilder sbx = new StringBuilder();
                     List<string> reactions = new List<string> { };
                     foreach (CommandInfo Command in Group)
                     {
                         reactions.Add("`" + Command.Name + "` ");
-                        sb.Append($"`{Command.Name}` ");
+                        sbx.Append($"`{Command.Name}` ");
 
                     }
-                    HEDesc.AppendLine($"**{Group.Key}**: " + sb.ToString());
+                    HEDesc.AppendLine($"**{Group.Key}**: " + sbx.ToString());
                 }
                 else
                 {
@@ -63,7 +63,9 @@ namespace MidoriBot.Modules
             HEDesc.AppendLine($"\nYou can use `{Midori.MidoriConfig["Command_Prefix"]}Help <command>` for more information on that command");
 
             HelpEmbed.Description = HEDesc.ToString();
-            await (Context.User.CreateDMChannelAsync().Result).SendEmbedAsync(HelpEmbed);
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("**See my source code!** https://github.com/lofdat/Midori");
+            await (Context.User.CreateDMChannelAsync().Result).SendMessageAsync(sb.ToString(), false, HelpEmbed);
             if (!Context.IsPrivate)
             {
                 await Context.Channel.SendMessageAsync($"{Context.User.Mention}, help sent to your Direct Messages!");

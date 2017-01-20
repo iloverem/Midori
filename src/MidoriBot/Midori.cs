@@ -24,6 +24,7 @@ namespace MidoriBot
         };
         public CommandService MidoriCommands;
         public static Dictionary<string, object> MidoriConfig;
+        public static Dictionary<string, object> MidoriCredentials;
         public CommandServiceConfig MidoriCommandsConfig = new CommandServiceConfig
         {
             DefaultRunMode = RunMode.Sync
@@ -65,6 +66,7 @@ namespace MidoriBot
             {
                 // Import JSON
                 StreamReader RawOpen = File.OpenText(@"./midori_config.json");
+                StreamReader RawCredentialsOpen = File.OpenText(@"./credentials.json");
             }
             catch (FileNotFoundException)
             {
@@ -73,9 +75,13 @@ namespace MidoriBot
                 await Task.Delay(-1);
             }
             StreamReader Raw = File.OpenText(@"./midori_config.json");
+            StreamReader RawCredentials = File.OpenText(@"./credentials.json");
             JsonTextReader TextReader = new JsonTextReader(Raw);
+            JsonTextReader CredTextReader = new JsonTextReader(RawCredentials);
             JObject MidoriJConfig = (JObject)JToken.ReadFrom(TextReader);
+            JObject MidoriCred = (JObject)JToken.ReadFrom(CredTextReader);
             MidoriConfig = JsonConvert.DeserializeObject<Dictionary<string, object>>(MidoriJConfig.ToString());
+            MidoriCredentials = JsonConvert.DeserializeObject<Dictionary<string, object>>(MidoriCred.ToString());
 
             // Setup dependencies
             IDependencyMap MidoriDeps = new DependencyMap();
@@ -90,7 +96,7 @@ namespace MidoriBot
             Console.WriteLine("Installed event handler.");
 
             // Login and connect
-            await MidoriClient.LoginAsync(TokenType.Bot, MidoriConfig["Connection_Token"].ToString());
+            await MidoriClient.LoginAsync(TokenType.Bot, (string)MidoriCredentials["Connection_Token"]);
             Console.WriteLine("Sent login information to Discord.");
             await MidoriClient.ConnectAsync();
             Console.WriteLine("Connected.");
