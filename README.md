@@ -2,11 +2,12 @@
 Midori is an open-source .NET Core C# bot for Discord.  
 
 # Installation  
-~~Download and install .NET Core ([x64](https://go.microsoft.com/fwlink/?LinkID=836279), [x86](https://go.microsoft.com/fwlink/?LinkID=836288))
-Check that .NET Core is installed from the Command Prompt (`dotnet --version`)~~.
+* ~~Download and install .NET Core ([x64](https://go.microsoft.com/fwlink/?LinkID=836279), [x86](https://go.microsoft.com/fwlink/?LinkID=836288))~~
+* ~~Check that .NET Core is installed from the Command Prompt (`dotnet --version`)~~.
 * **If you're using a version from Releases, the correct version of .NET Core is included already for you. :D**
 * Download the latest version of Midori from Releases  
-* Rename `midori_configTEMPLATE.json` to `midori_config.json` and fill in the respective values inside it  
+* Rename `credentials-template.json` to `credentials.json` and fill in the respective values inside it   
+* Open `midori_config.json` and edit to your will  
 * Run `MidoriBot.exe` or `_Run MidoriBot` (at the top)  
   
 # Building
