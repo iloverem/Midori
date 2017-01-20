@@ -19,5 +19,9 @@ namespace MidoriBot.Modules.Reactions
         public async Task WotCommand() => await ReplyAsync("ಠ_ಠ");
         [Command("Hug"), Summary("༼ つ ◕_◕ ༽つ")]
         public async Task HugCommand() => await ReplyAsync("༼ つ ◕_◕ ༽つ");
+        [Command("TeddyShrug"), Summary("ʅʕ•ᴥ•ʔʃ")]
+        public async Task TeddyShrugCommand() => await ReplyAsync("ʅʕ•ᴥ•ʔʃ");
+        [Command("Shrug"), Summary(@"¯\_(ツ)_/¯")]
+        public async Task ShrugCommand() => await ReplyAsync(@"¯\_(ツ)_/¯");
     }
 }

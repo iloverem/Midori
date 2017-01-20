@@ -13,6 +13,7 @@ namespace MidoriBot.Modules.Owner
         [Command("Shutdown"), Alias("Die"), Summary("Turns off the bot."), RequireOwner, MinPermissions(AccessLevel.BotOwner)]
         public async Task DieCommand()
         {
+            Console.WriteLine("== !! INITIATED SHUTDOWN !! ==");
             await ReplyAsync(":warning: Shutdown procedure initiated. Goodbye!");
             await Context.Client.DisconnectAsync();
             Context.Client.Dispose();
