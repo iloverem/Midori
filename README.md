@@ -1,4 +1,4 @@
-# Midori
+http://i.imgur.com/ZVsI0CR.jpg
 Midori is an open-source .NET Core C# bot for Discord.  
 
 # Installation  
