@@ -42,12 +42,13 @@ namespace MidoriBot
                 Console.WriteLine("Attempting to hand over control to async...");
                 Midori.Start().GetAwaiter().GetResult();
             }
-            catch (HttpRequestException e)
+            catch (HttpRequestException)
             {
+                Console.WriteLine("==== CRITICAL ISSUE ====");
                 Console.WriteLine("Failed to complete handover.");
                 Console.WriteLine($"Cannot connect to Discord! D:");
-                Console.WriteLine($"Exception details:");
-                Console.WriteLine(e);
+                Console.WriteLine("Is your internet working?");
+                Console.ReadLine();
             }
         }
 
