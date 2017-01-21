@@ -29,7 +29,6 @@ namespace MidoriBot
         {
             DefaultRunMode = RunMode.Sync
         };
-        public static MidoriHandler CommandHandler;
 
         public static string GetDescription()
         {
@@ -58,7 +57,6 @@ namespace MidoriBot
         {
             MidoriClient = new DiscordSocketClient(MidoriSocketConfig);
             MidoriCommands = new CommandService(MidoriCommandsConfig);
-            CommandHandler = new MidoriHandler();
             Console.WriteLine("Handover success.");
             Console.WriteLine("Created client, command service and command handler.");
             try
@@ -90,8 +88,7 @@ namespace MidoriBot
             Console.WriteLine("Organized dependency library.");
 
             // Events handler
-            MidoriEvents MidoriEvents = new MidoriEvents();
-            MidoriEvents.Install();
+            MidoriEvents.Setup();
             Console.WriteLine("Installed event handler.");
 
             // Login and connect
@@ -102,7 +99,7 @@ namespace MidoriBot
             await MidoriClient.DownloadAllUsersAsync();
 
             // Install command handling
-            await CommandHandler.Setup(MidoriDeps);
+            await MidoriHandler.Setup(MidoriDeps);
             Console.WriteLine("Installed commands handler.");
 
             // Keep the bot running

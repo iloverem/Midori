@@ -9,13 +9,13 @@ using MidoriBot.Common;
 
 namespace MidoriBot
 {
-    public class MidoriHandler
+    public static class MidoriHandler
     {
-        private CommandService MidoriCommands;
-        private DiscordSocketClient MidoriClient;
-        private IDependencyMap MidoriDeps;
+        private static CommandService MidoriCommands;
+        private static DiscordSocketClient MidoriClient;
+        private static IDependencyMap MidoriDeps;
 
-        public async Task Setup(IDependencyMap _MidoriDeps)
+        public static async Task Setup(IDependencyMap _MidoriDeps)
         {
             MidoriDeps = _MidoriDeps;
             MidoriClient = MidoriDeps.Get<DiscordSocketClient>();
@@ -26,7 +26,7 @@ namespace MidoriBot
             MidoriClient.MessageReceived += MidoriProcessCommand;
         }
 
-        public async Task MidoriProcessCommand(SocketMessage Raw)
+        public static async Task MidoriProcessCommand(SocketMessage Raw)
         {
             SocketUserMessage Message = Raw as SocketUserMessage;
             String Prefix = Midori.MidoriConfig["Command_Prefix"].ToString();
@@ -64,7 +64,7 @@ namespace MidoriBot
             });
         }
 
-        private async Task OnCommandError(IResult Search, CommandContext Context)
+        private static async Task OnCommandError(IResult Search, CommandContext Context)
         {
             ErrorEmbed CommandError = new ErrorEmbed();
             CommandError.Title = "Something didn't work!";

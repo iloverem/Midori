@@ -8,9 +8,9 @@ using Discord.Commands;
 
 namespace MidoriBot.Events
 {
-    public class MidoriEvents
+    public static class MidoriEvents
     {
-        public void Install()
+        public static void Setup()
         {
             Midori.MidoriClient.UserJoined += midori_UserEvents.UserJoined;
             Midori.MidoriClient.UserLeft += midori_UserEvents.UserLeft;
