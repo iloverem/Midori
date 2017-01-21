@@ -25,7 +25,7 @@ Midori uses and loves:
   
 Midori says thanks to:  
 * Ruby Rose/Hibiki | [GitHub](https://github.com/Nanabell/Hibiki)  
-* Discord API Server | [Discord Invite](https://discord.gg/7ym9k)
+* Discord API Server | [Discord Invite](https://discord.gg/AZqXnRD)
 
 # Roadmap
 1.3: More commands.  
