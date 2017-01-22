@@ -68,8 +68,10 @@ namespace MidoriBot
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("You dumb shit ! I can't find midori_config.json. Follow this guide and try again: https://github.com/lofdat/Midori/blob/master/README.md");
-                Environment.FailFast("cannot find midori_config.json");
+                Console.WriteLine("==== CRITICAL ISSUE ====");
+                Console.WriteLine("Failed to access credentials or config.");
+                Console.WriteLine($"Cannot read midori_config.json or credentials.json.");
+                Console.WriteLine("Follow this guide and try again: https://github.com/lofdat/Midori/blob/master/README.md");
                 await Task.Delay(-1);
             }
             StreamReader Raw = File.OpenText(@"./midori_config.json");
