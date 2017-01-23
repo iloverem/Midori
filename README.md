@@ -1,5 +1,6 @@
 ![Midori - Promotional - Header 1](http://i.imgur.com/ZVsI0CR.jpg)
 Midori is an open-source .NET Core C# bot for Discord.  
+**Midori and all other Lofdat projects are now being maintained/operated by iloverem. :tada: **
 
 # Installation  
 * ~~Download and install .NET Core ([x64](https://go.microsoft.com/fwlink/?LinkID=836279), [x86](https://go.microsoft.com/fwlink/?LinkID=836288))~~
