@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace MidoriBot
 {
-    public class Midori
+    public sealed class Midori
     {
         public static DiscordSocketClient MidoriClient;
         public static string Version = "1.0";

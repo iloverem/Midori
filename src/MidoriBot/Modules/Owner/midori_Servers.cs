@@ -9,7 +9,7 @@ using Discord.WebSocket;
 namespace MidoriBot.Modules.Owner
 {
     [Name("Owner")]
-    public class midori_Servers : ModuleBase
+    public sealed class midori_Servers : ModuleBase
     {
         [Command("Servers"), Summary("See the servers I'm in.")]
         public async Task ServersCommand()
