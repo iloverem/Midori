@@ -70,7 +70,7 @@ namespace MidoriBot.Modules.Info
                 x.IsInline = true;
             });
             Embed.Description = $"{Guild.Name} is a Discord server with {Guild.Users.Count} {(Guild.Users.Count > 1 ? "members" : "member")}, with {(Guild.Users.Where(User => (User.Status == UserStatus.Online))).Count()} online. It has {VoiceChannels} voice {(VoiceChannels > 1 ? "channels": "channel")}, {TextChannels} text channels, a voice region of {VoiceRegion} and {TotalRoles} {(TotalRoles > 1 ? "roles" : "role")}. It is being operated by {Owner}. If you want to chat here, you're going to need Verification Level {VerificationLevel}.";
-            Embed.Footer = (new MEmbedFooter(Context.Client)).WithText($"Server ID: {Guild.Id}");
+            Embed.Footer = (new MEmbedFooter()).WithText($"Server ID: {Guild.Id}");
             await Context.Channel.SendEmbedAsync(Embed);
         }
     }

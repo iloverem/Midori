@@ -72,7 +72,7 @@ namespace MidoriBot.Modules.Anime_and_Manga
                 a.Value = $"{GetInnerText(XMLResponse.GetElementsByTagName("start_date"))}{(GetInnerText(XMLResponse.GetElementsByTagName("end_date")) != "0000-00-00" ?  " / " + GetInnerText(XMLResponse.GetElementsByTagName("end_date")) : "")}";
                 a.IsInline = true;
             });
-            AnimeEmbed.Footer = (new MEmbedFooter(Context.Client)).WithText($"All information from the MyAnimeList API").WithIconUrl("http://i.imgur.com/vEy5Zaq.png");
+            AnimeEmbed.Footer = (new MEmbedFooter()).WithText($"All information from the MyAnimeList API").WithIconUrl("http://i.imgur.com/vEy5Zaq.png");
             await Context.Channel.SendEmbedAsync(AnimeEmbed);
         }
         private string GetInnerText(XmlNodeList NodeList)
