@@ -16,9 +16,9 @@ namespace MidoriBot.Common
 
     public class MEmbedFooter : EmbedFooterBuilder
     {
-        public MEmbedFooter(IDiscordClient Client)
+        public MEmbedFooter()
         {
-            WithIconUrl(Client.CurrentUser.AvatarUrl);
+            WithIconUrl(Midori.MidoriClient.CurrentUser.AvatarUrl);
         }
     }
 

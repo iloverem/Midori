@@ -14,6 +14,7 @@ namespace MidoriBot.Modules.Fun
     [Name("Fun")]
     public class midori_RandomAnimals : ModuleBase
     {
+
         [Command("Cat"), Summary("Gets a random cat!")]
         public async Task CatCommand()
         {
@@ -28,7 +29,7 @@ namespace MidoriBot.Modules.Fun
             NormalEmbed Cat = new NormalEmbed();
             Cat.Title = "Cat.";
             Cat.ImageUrl = Result["file"];
-            Cat.Footer = new MEmbedFooter(Context.Client).WithText("Courtesy of http://random.cat");
+            Cat.Footer = new MEmbedFooter().WithText("Courtesy of http://random.cat");
             await Context.Channel.SendEmbedAsync(Cat);
         }
     }

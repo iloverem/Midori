@@ -60,7 +60,7 @@ namespace MidoriBot.Modules.Info
                 x.Value = Context.Client.GetGuildsAsync().Result.Count.ToString();
             });
 
-            Info.Footer = (new MEmbedFooter(Context.Client)).WithText("Bot Information");
+            Info.Footer = (new MEmbedFooter()).WithText("Bot Information");
             await Context.Channel.SendEmbedAsync(Info);
         }
     }
