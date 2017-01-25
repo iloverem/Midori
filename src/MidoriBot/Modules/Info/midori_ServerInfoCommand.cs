@@ -20,12 +20,12 @@ namespace MidoriBot.Modules.Info
             Embed.Title = $"Server {Guild.Name}";
             Embed.ThumbnailUrl = Guild.IconUrl;
             int TotalRoles = Guild.Roles.Count;
-            string VoiceRegion = (Context.Client.GetVoiceRegionAsync(Guild.VoiceRegionId)).Result.Name;
+            string VoiceRegion = (await (Context.Client.GetVoiceRegionAsync(Guild.VoiceRegionId))).Name;
             string VerificationLevel = Guild.VerificationLevel.ToString();
-            int VoiceChannels = Guild.GetVoiceChannelsAsync().Result.Count();
-            int TextChannels = Guild.GetTextChannelsAsync().Result.Count();
+            int VoiceChannels = (await (Guild.GetVoiceChannelsAsync())).Count();
+            int TextChannels = (await Guild.GetTextChannelsAsync()).Count();
             string Members = $"{(Guild.Users.Where(User => (User.Status == UserStatus.Online))).Count()} Online / {Guild.Users.Count.ToString()} Total";
-            string Owner = Context.Client.GetUserAsync(Guild.OwnerId).Result.Username;
+            string Owner = (await Context.Client.GetUserAsync(Guild.OwnerId)).Username;
 
             Embed.AddField(x =>
             {

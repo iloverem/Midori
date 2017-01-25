@@ -28,7 +28,7 @@ namespace MidoriBot.Modules.Info
             Info.AddField(MD =>
             {
                 MD.Name = "Owner";
-                MD.Value = Context.Client.GetUserAsync(Context.Client.GetApplicationInfoAsync().Result.Owner.Id).Result.Username;
+                MD.Value = Context.Client.GetUserAsync(Context.Client.GetApplicationInfoAsync().GetAwaiter().GetResult().Owner.Id).GetAwaiter().GetResult().Username;
                 MD.IsInline = true;
             });
             Info.AddField(x =>
@@ -57,7 +57,7 @@ namespace MidoriBot.Modules.Info
             Info.AddField(x =>
             {
                 x.Name = "Total Servers";
-                x.Value = Context.Client.GetGuildsAsync().Result.Count.ToString();
+                x.Value = Context.Client.GetGuildsAsync().GetAwaiter().GetResult().Count.ToString();
             });
 
             Info.Footer = (new MEmbedFooter()).WithText("Bot Information");

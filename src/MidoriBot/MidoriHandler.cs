@@ -113,7 +113,7 @@ namespace MidoriBot
             {
                 CommandError.WithFooter(Footer =>
                 {
-                    Footer.Text = $"Please report this to my creator, {MidoriClient.GetUser(MidoriClient.GetApplicationInfoAsync().Result.Owner.Id).Username}!";
+                    Footer.Text = $"Please report this to my creator, {MidoriClient.GetUser(MidoriClient.GetApplicationInfoAsync().GetAwaiter().GetResult().Owner.Id).Username}!";
                 });
             }
 

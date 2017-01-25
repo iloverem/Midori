@@ -16,7 +16,7 @@ namespace MidoriBot.Modules.Owner
         {
             StringBuilder s = new StringBuilder();
             int Pos = 1;
-            foreach (SocketGuild Guild in Context.Client.GetGuildsAsync().Result)
+            foreach (SocketGuild Guild in (await Context.Client.GetGuildsAsync()))
             {
                 s.AppendLine($"{Pos}. **{Guild.Name}** (ID: {Guild.Id})");
                 Pos += 1;
