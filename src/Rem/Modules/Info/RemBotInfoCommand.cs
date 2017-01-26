@@ -35,6 +35,7 @@ namespace Rem.Modules.Info
             {
                 x.Name = "Discriminator";
                 x.Value = Context.Client.CurrentUser.Discriminator;
+                x.IsInline = true;
             });
             Info.AddField(x =>
             {
@@ -43,21 +44,25 @@ namespace Rem.Modules.Info
                     x.Value = "Playing " + Context.Client.CurrentUser.Game.Value;
                 else
                     x.Value = "Not playing anything.";
+                x.IsInline = true;
             });
             Info.AddField(x =>
             {
                 x.Name = "Status";
                 x.Value = "Happy serving commands!";
+                x.IsInline = true;
             });
             Info.AddField(x =>
             {
                 x.Name = "Language";
                 x.Value = "C#, proudly using .NET Core.";
+                x.IsInline = true;
             });
             Info.AddField(x =>
             {
                 x.Name = "Total Servers";
                 x.Value = Context.Client.GetGuildsAsync().GetAwaiter().GetResult().Count.ToString();
+                x.IsInline = true;
             });
 
             Info.Footer = (new MEmbedFooter()).WithText("Bot Information");
