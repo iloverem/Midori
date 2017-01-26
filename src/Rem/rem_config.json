@@ -1,5 +1,5 @@
 ﻿{
-  "Command_Prefix": ".",
+  "Command_Prefix": "rem.",
   "AcceptBotCommands": false,
   "AlertOnUnknownCommands": false
 }

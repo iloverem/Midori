@@ -56,10 +56,12 @@ namespace Rem
 
         public static async Task Start()
         {
+            Console.WriteLine("Handover success.");
+            Console.Write("Attempting to initialize client and service... ");
             RemClient = new DiscordSocketClient(RemSocketConfig);
             RemService = new CommandService(RemServiceConfig);
-            Console.WriteLine("Handover success.");
-            Console.WriteLine("Created client, command service and command handler.");
+            Console.Write("Done.");
+            Console.WriteLine();
             try
             {
                 // Import JSON
@@ -74,6 +76,7 @@ namespace Rem
                 Console.WriteLine("Follow this guide and try again: https://github.com/iloverem/Rem/blob/master/README.md");
                 await Task.Delay(-1);
             }
+            Console.Write("Attempting to deserialize configuration and credential files.... ");
             StreamReader Raw = File.OpenText(@"./rem_config.json");
             StreamReader RawCredentials = File.OpenText(@"./credentials.json");
             JsonTextReader TextReader = new JsonTextReader(Raw);
@@ -82,28 +85,52 @@ namespace Rem
             JObject MidoriCred = (JObject)JToken.ReadFrom(CredTextReader);
             RemConfig = JsonConvert.DeserializeObject<Dictionary<string, object>>(MidoriJConfig.ToString());
             RemCredentials = JsonConvert.DeserializeObject<Dictionary<string, object>>(MidoriCred.ToString());
+            Console.Write("Done.");
+            Console.WriteLine();
 
             // Setup dependencies
+            Console.Write("Creating dependency library... ");
             IDependencyMap RemDeps = new DependencyMap();
             RemDeps.Add(RemClient);
             RemDeps.Add(RemService);
             RemDeps.Add(MidoriJConfig);
-            Console.WriteLine("Organized dependency library.");
+            Console.Write("Done.");
+            Console.WriteLine();
 
             // Events handler
+            Console.Write("Installing events handler.... ");
             RemEvents.Setup();
-            Console.WriteLine("Installed event handler.");
+            Console.Write("Done.");
+            Console.WriteLine();
 
             // Login and connect
+            Console.Write("Logging in... ");
             await RemClient.LoginAsync(TokenType.Bot, (string)RemCredentials["Connection_Token"]);
-            Console.WriteLine("Sent login information to Discord.");
+            Console.Write("Done.");
+            Console.WriteLine();
+            Console.Write("Connecting.... ");
             await RemClient.ConnectAsync();
-            Console.WriteLine("Connected.");
+            Console.Write("Done.");
+            Console.WriteLine();
+            Console.Write("Downloading users.... ");
             await RemClient.DownloadAllUsersAsync();
+            Console.Write("Done.");
+            Console.WriteLine();
 
             // Install command handling
+            Console.Write("Installing commands handler... ");
             await RemHandler.Setup(RemDeps);
-            Console.WriteLine("Installed commands handler.");
+            Console.Write("Done.");
+            Console.WriteLine();
+
+            // Ready
+            Console.WriteLine("=====");
+            Console.WriteLine((Rem.RemClient.GetApplicationInfoAsync().GetAwaiter().GetResult()).Description);
+            Console.WriteLine("Active token: " + Rem.RemCredentials["Connection_Token"]);
+            Console.WriteLine("Active command prefix: " + Rem.RemConfig["Command_Prefix"]);
+            Console.WriteLine("Accepting bot commands: " + ((bool)Rem.RemConfig["AcceptBotCommands"] ? "Yes." : "No."));
+            Console.WriteLine("Alerting on unknown command: " + ((bool)Rem.RemConfig["AlertOnUnknownCommands"] ? "Yes." : "No."));
+            Console.WriteLine("=====");
 
             // Keep the bot running
             await Task.Delay(-1);

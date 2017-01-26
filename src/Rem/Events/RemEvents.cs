@@ -14,7 +14,6 @@ namespace Rem.Events
         {
             Rem.RemClient.UserJoined += RemUserEvents.UserJoined;
             Rem.RemClient.UserLeft += RemUserEvents.UserLeft;
-            Rem.RemClient.Ready += RemReadyEvent.ReadyEvent;
         }
     }
 }

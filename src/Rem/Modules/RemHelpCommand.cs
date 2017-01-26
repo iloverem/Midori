@@ -64,7 +64,7 @@ namespace Rem.Modules
 
             HelpEmbed.Description = HEDesc.ToString();
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("**See my source code!** https://github.com/lofdat/Rem");
+            sb.AppendLine("**See my source code!** https://github.com/iloverem/Rem");
             await (Context.User.CreateDMChannelAsync().Result).SendMessageAsync(sb.ToString(), false, HelpEmbed);
             if (!Context.IsPrivate)
             {
