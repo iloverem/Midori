@@ -1,14 +1,14 @@
-![Midori - Promotional - Header 1](http://i.imgur.com/ZVsI0CR.jpg)
-Midori is an open-source .NET Core C# bot for Discord.  
+Episode 15 letting you down? Rem is here to help.
+Rem is an open-source .NET Core C# bot for Discord.  
 
 # Installation  
 * ~~Download and install .NET Core ([x64](https://go.microsoft.com/fwlink/?LinkID=836279), [x86](https://go.microsoft.com/fwlink/?LinkID=836288))~~
 * ~~Check that .NET Core is installed from the Command Prompt (`dotnet --version`)~~.
 * **If you're using a version from Releases, the correct version of .NET Core is included already for you. :D**
-* Download the latest version of Midori from Releases  
+* Download the latest version of Rem from Releases  
 * Rename `credentials-template.json` to `credentials.json` and fill in the respective values inside it   
-* Open `midori_config.json` and edit to your will  
-* Run `MidoriBot.exe` or `_Run MidoriBot` (at the top)  
+* Open `rem_config.json` and edit to your will  
+* Run `Rem.exe` or `_Run Rem` (at the top)  
 **.NET Core is multiplatform.** Native Mac/Linux binaries coming soon!  
   
 # Building
@@ -19,11 +19,11 @@ You need:
 Build instructions coming soon.  
   
 # Acknowledgements  
-Midori uses and loves:
+Rem uses and loves:
 * .NET Core (.NET Standard) | [GitHub](https://github.com/dotnet/core), [Website](https://dotnet.github.io/)  
 * Discord.Net (1.0 release) | [GitHub](https://github.com/RogueException/Discord.Net/), [Documentation](https://discord.foxbot.me/docs/)  
   
-Midori says thanks to:  
+Rem says thanks to:  
 * Ruby Rose/Hibiki | [GitHub](https://github.com/Nanabell/Hibiki)  
 * Discord API Server | [Discord Invite](https://discord.gg/AZqXnRD)
 
