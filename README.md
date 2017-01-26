@@ -1,4 +1,4 @@
-Episode 15 letting you down? Rem is here to help.
+Episode 15 letting you down? Rem is here to help.  
 Rem is an open-source .NET Core C# bot for Discord.  
 
 # Installation  
