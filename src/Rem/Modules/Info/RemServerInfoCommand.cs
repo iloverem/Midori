@@ -17,7 +17,7 @@ namespace Rem.Modules.Info
         {
             SocketGuild Guild = Context.Guild as SocketGuild;
             NormalEmbed Embed = new NormalEmbed();
-            Embed.Title = $"Server {Guild.Name}";
+            Embed.Title = $"{Guild.Name}";
             Embed.ThumbnailUrl = Guild.IconUrl;
             int TotalRoles = Guild.Roles.Count;
             string VoiceRegion = (await (Context.Client.GetVoiceRegionAsync(Guild.VoiceRegionId))).Name;
