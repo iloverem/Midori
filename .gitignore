@@ -242,3 +242,4 @@ ModelManifest.xml
 .fake/
 /src/MidoriBot/midori_config.json
 /src/MidoriBot/credentials.json
+/src/Rem/credentials.json
