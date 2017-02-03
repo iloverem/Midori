@@ -10,18 +10,18 @@ namespace MidoriBot.Modules.Fun
         [Command("Dance"), Summary("Dances!")]
         public async Task DanceCommand()
         {
-            bool Left = true;
+            bool SetLeft = true;
             int Loops = 0;
             IUserMessage Message = await Context.Channel.SendMessageAsync(@"\o\");
             while (Loops < 10)
             {
-                Left = !Left;
-                if (Left)
+                if (SetLeft)
                 {
                     await Message.ModifyAsync(x =>
                     {
                         x.Content = @"\o\";
                     });
+                    SetLeft = false;
                 }
                 else
                 {
@@ -29,6 +29,7 @@ namespace MidoriBot.Modules.Fun
                     {
                         x.Content = @"/o/";
                     });
+                    SetLeft = true;
                 }
                 Loops++;
             }

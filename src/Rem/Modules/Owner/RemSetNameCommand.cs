@@ -13,10 +13,18 @@ namespace Rem.Modules.Owner
         [Command("SetName"), Summary("Changes the bot name."), RequireOwner, MinPermissions(AccessLevel.BotOwner)]
         public async Task SetNameCommand([Remainder, Summary("New name.")] string NewName)
         {
-            await Rem.RemClient.CurrentUser.ModifyAsync(x =>
+            try
             {
-                x.Username = NewName;
-            });
+                await Rem.RemClient.CurrentUser.ModifyAsync(x =>
+                {
+                    x.Username = NewName;
+                });
+                await ReplyAsync(":information_source: Username changed to " + NewName + "!");
+            }
+            catch
+            {
+                await ReplyAsync(":warning: Failed to change username!");
+            }
         }
     }
 }

@@ -67,15 +67,17 @@ namespace Rem
         private static async Task OnCommandError(IResult Search, CommandContext Context)
         {
             ErrorEmbed CommandError = new ErrorEmbed();
-            CommandError.Title = "Something didn't work!";
-            CommandError.Description = $"I couldn't do what you wanted, {Context.User.Username}!";
+            CommandError.Title = "An error occurred!";
+            CommandError.Description = $"An error occurred while running a command.";
             CommandError.ThumbnailUrl = Context.Client.CurrentUser.AvatarUrl;
 
             // Adding in errors which should not be reported to the bot creator
-            Dictionary<CommandError, bool> KnownErrors = new Dictionary<CommandError, bool>
+            Dictionary<CommandError, bool> ReportErrors = new Dictionary<CommandError, bool>
             {
+                // False: do not report
+                // True: report
                 {Discord.Commands.CommandError.UnmetPrecondition, false },
-                {Discord.Commands.CommandError.UnknownCommand, !(bool)Rem.RemConfig["AlertOnUnknownCommands"] },
+                {Discord.Commands.CommandError.UnknownCommand, (bool)Rem.RemConfig["AlertOnUnknownCommands"] },
                 {Discord.Commands.CommandError.BadArgCount, false }
             };
             // Explanation:
@@ -83,37 +85,31 @@ namespace Rem
             // So, in the above dictionary, the bool is whether to say "Report this."
             // the below logic finds the search.error in the dictionary and reflects on sayreport.
 
-            bool SayReport;
+            bool ToReport;
 
-            if (KnownErrors.ContainsKey(Search.Error.Value))
+            if (ReportErrors.ContainsKey(Search.Error.Value) && !ReportErrors[Search.Error.Value])
             {
-                SayReport = KnownErrors[Search.Error.Value];
+                ToReport = false;
             }
             else
             {
-                SayReport = true;
+                ToReport = true;
             }
 
             // Fields
             CommandError.AddField(Field =>
             {
                 Field.IsInline = false;
-                Field.Name = "Reason";
+                Field.Name = "Error Reason";
                 Field.Value = Search.ErrorReason;
             });
 
-            if (Search.Error == Discord.Commands.CommandError.UnknownCommand && !(bool)Rem.RemConfig["AlertOnUnknownCommands"] && !Context.IsPrivate)
-            {
-                SayReport = false;
-                return;
-            }
-
             // Footer
-            if (SayReport)
+            if (ToReport)
             {
                 CommandError.WithFooter(Footer =>
                 {
-                    Footer.Text = $"Please report this to my creator, {RemClient.GetUser(RemClient.GetApplicationInfoAsync().GetAwaiter().GetResult().Owner.Id).Username}!";
+                    Footer.Text = $"You shouldn't ever get an error like this. Please contact {RemClient.GetUser(RemClient.GetApplicationInfoAsync().GetAwaiter().GetResult().Owner.Id).Username}.";
                 });
             }
 
